@@ -1,8 +1,8 @@
 {
-  "name": "@white/rox",
+  "name": "@huangbo/rox",
   "description": "不一样的react状态机",
   "version": "0.0.1",
-  "author": "white",
+  "author": "huangbo",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -23,11 +23,9 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@types/lodash": "^4.14.173",
     "@types/react": "^17.0.21",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint-plugin-react": "^7.25.1",
-    "lodash": "^4.17.21",
     "path": "^0.12.7",
     "prettier": "^2.4.1",
     "rollup": "^2.56.3",

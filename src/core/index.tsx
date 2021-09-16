@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:48:26
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-16 23:42:29
+ * @LastEditTime: 2021-09-17 00:08:07
  */
 /*
  * @Author: 筱白
@@ -13,9 +13,8 @@
  * @LastEditTime: 2021-09-16 22:50:33
  * @Description: localModel
  */
-import pick from 'lodash/pick';
-import isEqual from 'lodash/isEqual';
 import { FC, useEffect, useRef, useState } from 'react';
+import { isEqual, pick } from 'src/helpers/utils';
 import CreateObserver from '../helpers/observer';
 import { ModelObj, ModelHooks, LocalModel } from '../typings';
 // check obj diff
