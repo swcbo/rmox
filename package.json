@@ -1,0 +1,45 @@
+{
+  "name": "@white/rox",
+  "description": "不一样的react状态机",
+  "version": "0.0.1",
+  "author": "white",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "scripts": {
+    "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
+    "build": "rm -fr lib && set NODE_ENV=production&& rollup -c rollup.config.js"
+  },
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kagol/ktools.git"
+  },
+  "keywords": [
+    "rox",
+    "react",
+    "hooks",
+    "useModole"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@types/lodash": "^4.14.173",
+    "@types/react": "^17.0.21",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint-plugin-react": "^7.25.1",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7",
+    "prettier": "^2.4.1",
+    "rollup": "^2.56.3",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  }
+}
