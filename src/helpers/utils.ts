@@ -4,9 +4,10 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:49:34
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-17 23:28:40
+ * @LastEditTime: 2021-09-17 23:42:40
  */
 import { ModelObj } from 'src/core';
+// uuid
 export const uuid = () => {
   const tempUrl = URL.createObjectURL(new Blob());
   const uuId = tempUrl.toString();

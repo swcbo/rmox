@@ -1,13 +1,12 @@
 {
   "name": "@cfdo/rmox",
   "description": "不一样的react状态机",
-  "version": "0.0.3",
-  "author": "huangbo",
+  "version": "0.0.5",
+  "author": "<1104133609@qq.com>",
   "license": "MIT",
-  "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
-  "unpkg": "lib/index.min.js",
+  "unpkg": "lib/index.js",
   "private": false,
   "types": "lib/index.d.ts",
   "sideEffects": false,
@@ -26,7 +25,8 @@
     "rmox",
     "react",
     "hooks",
-    "useModole"
+    "store",
+    "useModel"
   ],
   "devDependencies": {
     "@babel/core": "^7.15.5",

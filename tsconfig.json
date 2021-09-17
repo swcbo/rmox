@@ -4,7 +4,7 @@
     "outDir": "./lib", // 输出目录
     "sourceMap": false, // 是否生成sourceMap
     "target": "es6", // 编译目标
-    "module": "ESNext", // 模块类型
+    "module": "es6", // 模块类型
     "moduleResolution": "node",
     "allowJs": false, // 是否编辑js文件
     "strict": true, // 严格模式
@@ -17,7 +17,7 @@
     "declaration": true, // 生成定义文件
     "declarationMap": false, // 生成定义sourceMap
     "declarationDir": "./lib/types", // 定义文件输出目录
-    "lib": ["ESNext", "dom"], // 导入库类型定义
+    "lib": ["es6", "dom"], // 导入库类型定义
     "types": ["node"] // 导入指定类型包
   },
   "include": ["./**/*"],
