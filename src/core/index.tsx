@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:48:26
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-17 00:08:07
+ * @LastEditTime: 2021-09-17 15:23:06
  */
 /*
  * @Author: 筱白
@@ -13,10 +13,10 @@
  * @LastEditTime: 2021-09-16 22:50:33
  * @Description: localModel
  */
-import { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { isEqual, pick } from 'src/helpers/utils';
 import CreateObserver from '../helpers/observer';
-import { ModelObj, ModelHooks, LocalModel } from '../typings';
+import { LocalModel, ModelHooks, ModelObj } from '../typings';
 // check obj diff
 const checkFunDependBackState = <T extends ModelObj>(depFn: any[], state: T) =>
   depFn.length === 0 ? state || {} : pick(state, depFn);
@@ -34,7 +34,10 @@ const createLocalModel = <T extends ModelObj, P>(
   const observer: CreateObserver<T> = window.localModelStore[storeName];
   let isInitModel = true;
   // provider
-  const Provider: FC<{ init?: P }> = ({ children, init }) => {
+  const Provider: FC<{ init?: P; children: ReactNode }> = ({
+    children,
+    init,
+  }) => {
     // custom hooks bind
     const hookState = useCustomizedHook(init);
     // hot reload (create -> unmount -> mount)

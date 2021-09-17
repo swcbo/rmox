@@ -3,7 +3,7 @@
   "description": "不一样的react状态机",
   "version": "0.0.1",
   "author": "huangbo",
-  "license": "MIT",
+  "license": "ISC",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "scripts": {
@@ -13,7 +13,10 @@
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kagol/ktools.git"
+    "url": "git+https://github.com/q1104133609/rox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/q1104133609/rox/issues"
   },
   "keywords": [
     "rox",
