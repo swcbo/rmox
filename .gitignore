@@ -1,7 +1,4 @@
-# dependencies
-/node_modules
-
-# compiled output
-/lib
+node_modules/
+lib/
 yarn-error.log
 .npmignore
