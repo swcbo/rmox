@@ -16,12 +16,12 @@ const outputMap = [
     sourcemap: true,
     name: 'Rmox',
   },
-  // {
-  //   file: 'lib/index.esm.js', // 通用模块
-  //   format: 'es',
-  //   sourcemap: true,
-  //   name: 'Rmox',
-  // },
+  {
+    file: 'lib/index.esm.js', // 通用模块
+    format: 'es',
+    sourcemap: true,
+    name: 'Rmox',
+  },
   {
     file: 'lib/index.js', // 通用模块
     format: 'cjs',

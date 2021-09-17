@@ -1,22 +1,29 @@
 {
-  "name": "rmox",
+  "name": "@cfdo/rmox",
   "description": "不一样的react状态机",
-  "version": "0.0.7",
+  "version": "0.0.2",
   "author": "huangbo",
   "license": "MIT",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "typings": "lib/index.d.ts",
+  "unpkg": "lib/index.min.js",
+  "private": false,
+  "types": "lib/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
     "build": "rm -fr lib && set NODE_ENV=production&& rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/q1104133609/rox.git"
+    "url": "git+https://github.com/q1104133609/rmox.git"
   },
   "bugs": {
-    "url": "https://github.com/q1104133609/rox/issues"
+    "url": "https://github.com/q1104133609/rmox/issues"
   },
   "keywords": [
-    "rox",
+    "rmox",
     "react",
     "hooks",
     "useModole"
@@ -38,5 +45,6 @@
   },
   "peerDependencies": {
     "react": "^16.8.0"
-  }
+  },
+  "dependencies": {}
 }

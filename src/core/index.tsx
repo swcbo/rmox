@@ -1,40 +1,40 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { isEqual, pick } from 'src/helpers/utils';
-import CreateObserver from '../helpers/observer';
-import { LocalModel, ModelHooks, ModelObj } from '../rmox';
-// check obj diff
-const checkFunDependBackState = <T extends ModelObj>(depFn: any[], state: T) =>
-  depFn.length === 0 ? state || {} : pick(state, depFn);
-// set global localModelStore
-if (!window.localModelStore) {
-  window.localModelStore = {};
-}
-const createLocalModel = <T extends ModelObj, P>(
-  useCustomizedHook: ModelHooks<T, P>,
-  storeName = '',
-) => {
-  if (!window.localModelStore[storeName]) {
-    window.localModelStore[storeName] = new CreateObserver<T>();
+import Observer from '../helpers/observer';
+export type ModelObj = { [key: string]: any };
+type ModelHooks<T extends ModelObj, P> = (init?: P) => T;
+declare global {
+  interface Window {
+    modelStore: { [key: string]: Observer<any> };
   }
-  const observer: CreateObserver<T> = window.localModelStore[storeName];
+}
+
+const diffStore = <T extends ModelObj>(deps: string[], state: T) =>
+  deps.length === 0 ? state || {} : pick(state, deps);
+if (!window.modelStore) {
+  window.modelStore = {};
+}
+const createModel = <T extends ModelObj, P>(
+  useHook: ModelHooks<T, P>,
+  storeName: string,
+) => {
+  if (!window.modelStore[storeName]) {
+    window.modelStore[storeName] = new Observer<T>();
+  }
+  const observer: Observer<T> = window.modelStore[storeName];
   let isInitModel = true;
-  // provider
   const Provider: FC<{ init?: P }> = ({ children, init }) => {
-    // custom hooks bind
-    const hookState = useCustomizedHook(init);
-    // hot reload (create -> unmount -> mount)
+    const hookState = useHook(init);
     const isInit = useRef(true);
     if (!observer.state) {
       observer.setState(hookState);
     }
-    // listener change
     useEffect(() => {
       if (!isInit.current) {
         observer.dispatch(hookState);
       }
       isInit.current = false;
     }, [hookState]);
-    // clean current state
     useEffect(() => {
       isInitModel = false;
       return () => {
@@ -46,20 +46,15 @@ const createLocalModel = <T extends ModelObj, P>(
     // eslint-disable-next-line react/react-in-jsx-scope
     return <>{children}</>;
   };
-  // model
-  const useLocalModel: LocalModel<T> = () => {
-    const [currentState, setCurrentState] = useState<T>(
-      (observer.state!! || {}) as T,
-    );
+  const useModel = () => {
+    const [state, setState] = useState<T>((observer.state!! || {}) as T);
     const depsFnRef = useRef<string[]>([]);
-    // collect bind field
     const isInit = useRef(false);
-
     if (!isInit.current) {
-      Object.keys(currentState).forEach((v) => {
-        const value = currentState[v];
-        Object.defineProperty(currentState, v, {
-          get: function () {
+      Object.keys(state).forEach((v) => {
+        const value = state[v];
+        Object.defineProperty(state, v, {
+          get: () => {
             if (!depsFnRef.current.includes(v)) {
               depsFnRef.current.push(v);
             }
@@ -68,20 +63,18 @@ const createLocalModel = <T extends ModelObj, P>(
         });
       });
     }
-    const depsRef = useRef(
-      checkFunDependBackState(depsFnRef.current, currentState),
-    );
+    const depsRef = useRef(diffStore(depsFnRef.current, state));
     isInit.current = true;
     useEffect(() => {
       const unsubscribe = observer.subscribe((nextState: T) => {
         if (!depsFnRef.current) {
-          setCurrentState(nextState!!);
+          setState(nextState!!);
           return;
         }
         const oldDeps = depsRef.current;
-        const newDeps = checkFunDependBackState(depsFnRef.current, nextState);
+        const newDeps = diffStore(depsFnRef.current, nextState);
         if (!isEqual(oldDeps, newDeps)) {
-          setCurrentState(nextState!!);
+          setState(nextState!!);
         }
 
         depsRef.current = newDeps;
@@ -90,12 +83,11 @@ const createLocalModel = <T extends ModelObj, P>(
         unsubscribe();
       };
     }, []);
-
-    return currentState;
+    return state;
   };
-  useLocalModel.Provider = Provider;
-  useLocalModel.getState = () => observer.state!!;
-  return useLocalModel;
+  useModel.Provider = Provider;
+  useModel.getState = () => observer.state!!;
+  return useModel;
 };
 
-export default createLocalModel;
+export default createModel;
