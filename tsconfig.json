@@ -20,8 +20,6 @@
     "lib": ["esnext", "dom"], // 导入库类型定义
     "types": ["node"] // 导入指定类型包
   },
-  "include": [
-    "src/*" // 导入目录
-  ],
-  "exclude": []
+  "include": ["./**/*"],
+  "exclude": ["./node_modules/**/*"]
 }

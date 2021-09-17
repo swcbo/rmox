@@ -1,4 +1,4 @@
-import { ModelObj } from '../rmox';
+import { ModelObj } from 'src/rmox';
 export default class CreateObserver<T extends ModelObj> {
     listeners: {
         [key: string]: (state: T) => void;

@@ -2,10 +2,10 @@
  * @Author: 筱白
  * @Date: 2021-03-17 10:50:22
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-16 22:49:43
+ * @LastEditTime: 2021-09-17 17:32:52
  * @Description: 观察者
  */
-import { ModelObj } from '../typings';
+import { ModelObj } from '../rmox';
 import { uuid } from './utils';
 export default class CreateObserver<T extends ModelObj> {
   listeners: { [key: string]: (state: T) => void } = {};
