@@ -17,5 +17,6 @@ module.exports = {
     indent: ['error', 2],
     'no-unused-vars': 'off',
     'no-console': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 };

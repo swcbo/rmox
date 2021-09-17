@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { isEqual, pick } from 'src/helpers/utils';
+import { isEqual, pickStore } from 'src/helpers/utils';
 import Observer from '../helpers/observer';
 export type ModelObj = { [key: string]: any };
 type ModelHooks<T extends ModelObj, P> = (init?: P) => T;
@@ -9,8 +9,6 @@ declare global {
   }
 }
 
-const diffStore = <T extends ModelObj>(deps: string[], state: T) =>
-  deps.length === 0 ? state || {} : pick(state, deps);
 if (!window.modelStore) {
   window.modelStore = {};
 }
@@ -43,7 +41,6 @@ const createModel = <T extends ModelObj, P>(
         }
       };
     }, []);
-    // eslint-disable-next-line react/react-in-jsx-scope
     return <>{children}</>;
   };
   const useModel = () => {
@@ -63,7 +60,7 @@ const createModel = <T extends ModelObj, P>(
         });
       });
     }
-    const depsRef = useRef(diffStore(depsFnRef.current, state));
+    const depsRef = useRef(pickStore(depsFnRef.current, state));
     isInit.current = true;
     useEffect(() => {
       const unsubscribe = observer.subscribe((nextState: T) => {
@@ -72,7 +69,7 @@ const createModel = <T extends ModelObj, P>(
           return;
         }
         const oldDeps = depsRef.current;
-        const newDeps = diffStore(depsFnRef.current, nextState);
+        const newDeps = pickStore(depsFnRef.current, nextState);
         if (!isEqual(oldDeps, newDeps)) {
           setState(nextState!!);
         }

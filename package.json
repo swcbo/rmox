@@ -1,7 +1,7 @@
 {
   "name": "@cfdo/rmox",
   "description": "不一样的react状态机",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "huangbo",
   "license": "MIT",
   "main": "lib/index.js",
