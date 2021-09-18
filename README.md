@@ -1,10 +1,5 @@
 [English](./README.md) | 简体中文
 
-<style>
-  .textImage{
-    transform:scale(0.5) translateX(-160px);
-  }
-</style>
 <p align="center">
     <img width="80" src="./doc/logo.svg" alt="rmox logo">
 </p>
@@ -16,7 +11,7 @@
   <img src="https://img.shields.io/npm/dependency-version/@cfdo/rmox/peer/react?logo=react" alt="react version">
 </p>
 <br/>
-<img  src="./doc/textlogo.svg" alt="rmox logo" height="60" class="textImage">
+<img  src="./doc/textlogo.svg" alt="rmox logo" height="60">
 
 > 一个不一样的状态机管理器
 
