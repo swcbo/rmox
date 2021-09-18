@@ -16,7 +16,7 @@
     "jsx": "react-jsx",
     "declaration": true, // 生成定义文件
     "declarationMap": false, // 生成定义sourceMap
-    "declarationDir": "./lib/types", // 定义文件输出目录
+    "declarationDir": "./typings", // 定义文件输出目录
     "lib": ["es6", "dom"], // 导入库类型定义
     "types": ["node"] // 导入指定类型包
   },
