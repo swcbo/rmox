@@ -11,9 +11,7 @@
   <img src="https://img.shields.io/npm/dependency-version/@cfdo/rmox/peer/react?logo=react" alt="react version">
 </p>
 <br/>
-<img  src="./doc/textlogo.svg" alt="rmox logo" height="60" >
-<br/>
-<br/>
+<img  src="./doc/textlogo.svg" alt="rmox logo" height="60" style="transform: scale(0.5) translateX(-160px);">
 
 > 一个不一样的状态机管理器
 
