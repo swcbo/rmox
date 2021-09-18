@@ -5,16 +5,15 @@
 </p>
 <br/>
 <p align="center">
- <a href="https://travis-ci.com/q1104133609/rmox"><img src="https://travis-ci.com/q1104133609/rmox.svg?branch=main&logo=travis" alt="npm package"></a>
+ <a href="https://travis-ci.com/q1104133609/rmox"><img src="https://app.travis-ci.com/q1104133609/rmox.svg?branch=main" alt="npm package"></a>
   <a href="https://npmjs.com/package/@cfdo/rmox"><img src="https://img.shields.io/npm/v/@cfdo/rmox.svg?logo=npm" alt="npm package"></a>
   <a href="https://bundlephobia.com/package/@cfdo/rmox@latest"><img src="https://img.shields.io/bundlephobia/min/@cfdo/rmox.svg?logo=typescript" alt="size"></a>
   <img src="https://img.shields.io/npm/dependency-version/@cfdo/rmox/peer/react?logo=react" alt="react version">
 </p>
 <br/>
-<img  src="./doc/textlogo.svg" alt="rmox logo" height="60">
+<img  src="./doc/textlogo.svg" alt="rmox logo" height="60" >
 <br/>
-
-# rmox
+<br/>
 
 > 一个不一样的状态机管理器
 
