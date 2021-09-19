@@ -1,5 +1,7 @@
 import React from 'react';
 import useCounter from '../../models/useCounter';
+import useMoneyModel from '../../models/useMoneyModel';
+import useUserModel from '../../models/useUserModel';
 
 /*
  * @Descripttion:
@@ -7,10 +9,14 @@ import useCounter from '../../models/useCounter';
  * @Author: 小白
  * @Date: 2021-09-19 09:55:41
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 10:01:28
+ * @LastEditTime: 2021-09-19 19:05:17
  */
 const Count = () => {
   const { count } = useCounter();
-  return <span style={{ fontSize: 30 }}>{count}</span>;
+  return (
+    <>
+      <div style={{ fontSize: 30 }}>个数：{count}</div>
+    </>
+  );
 };
 export default Count;

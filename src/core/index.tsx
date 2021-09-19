@@ -1,26 +1,33 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import Observer from '../helpers/observer';
-import { isEqual, pickStore } from '../helpers/utils';
-import useUpdate from '../hooks/useUpdate';
+import useModel from '../hooks/useModel';
+import Rmox from './rmox';
+const rmoxStore = Rmox.getInstance().store;
 export type ModelObj = { [key: string]: any };
-declare global {
-  interface Window {
-    modelStore: { [key: string]: Observer<any> };
-  }
-}
-
-if (!window.modelStore) {
-  window.modelStore = {};
-}
-const createModel = <T extends ModelObj, P>(
+const GlobalProvider: FC = ({ children }) => {
+  const [models, setModels] = useState(Rmox.getInstance().globalModel);
+  const render = useCallback(
+    (children) =>
+      models.reduce(
+        (parent, Component) => <Component>{parent}</Component>,
+        children,
+      ),
+    [models],
+  );
+  return <>{render(children)}</>;
+};
+const createModel = <P, T extends ModelObj>(
   useHook: (init?: P) => T,
   storeName: string,
+  global = false,
 ) => {
-  if (!window.modelStore[storeName]) {
-    window.modelStore[storeName] = new Observer<T>();
+  if (!rmoxStore[storeName]) {
+    rmoxStore[storeName] = new Observer<T>();
   }
-  const observer: Observer<T> = window.modelStore[storeName];
-  const Provider: FC<{ init: P }> = ({ children, init }) => {
+
+  const observer = rmoxStore[storeName];
+
+  const Provider: FC<{ init?: P }> = ({ children, init }) => {
     const hookState = useHook(init);
     if (!observer.state) {
       observer.setState(hookState);
@@ -32,47 +39,10 @@ const createModel = <T extends ModelObj, P>(
     return <>{children}</>;
   };
 
-  const useModel = () => {
-    const update = useUpdate();
-    const state = useRef((observer.state!! || {}) as T);
-    const depsFnRef = useRef<string[]>([]);
-    const isInit = useRef(false);
-    const realData = state.current;
-    if (!isInit.current) {
-      Object.keys(realData).forEach((v) => {
-        const value = realData[v];
-        Object.defineProperty(realData, v, {
-          get: () => {
-            if (!depsFnRef.current.includes(v)) {
-              depsFnRef.current.push(v);
-            }
-            return value;
-          },
-        });
-      });
-    }
-    const oldStore = useRef(pickStore(depsFnRef.current, state));
-    isInit.current = true;
-    useEffect(() => {
-      return observer.subscribe((nextState: T) => {
-        state.current = nextState;
-        if (!depsFnRef.current) {
-          update();
-          return;
-        }
-        state.current = nextState;
-        const newDeps = pickStore(depsFnRef.current, nextState);
-        if (!isEqual(oldStore.current, newDeps)) {
-          update();
-        }
-        oldStore.current = newDeps;
-      });
-    }, []);
-    return state.current;
-  };
-  useModel.Provider = Provider;
-  useModel.getState = () => observer.state!!;
-  return useModel;
+  if (global) {
+    Rmox.getInstance().globalModel.push(Provider);
+  }
+  return useModel<T, P>(observer, Provider);
 };
 
-export default createModel;
+export { createModel, GlobalProvider };
