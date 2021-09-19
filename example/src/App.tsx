@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 19:05:56
+ * @LastEditTime: 2021-09-19 19:56:48
  */
 import React, { useState } from 'react';
 import './App.css';
@@ -13,11 +13,11 @@ import Count from './components/Counter/count';
 import Todo from './components/Todo';
 import useCounter from './models/useCounter';
 import useUserModel from './models/useUserModel';
-
 function App() {
   const [show, setShow] = useState(true);
   const [detail, showDetail] = useState(false);
   const { addAge, age } = useUserModel();
+  console.log(age);
   return (
     <div className="App" style={{ fontSize: 30 }}>
       {show && (

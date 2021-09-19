@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createModel } from '../../../src';
+import { createModel } from 'rmox';
 
 /*
  * @Descripttion:
@@ -7,7 +7,7 @@ import { createModel } from '../../../src';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 17:45:41
+ * @LastEditTime: 2021-09-19 20:50:20
  */
 const useMoneyModel = () => {
   const [money, setMoney] = useState(100);

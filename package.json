@@ -1,7 +1,7 @@
 {
   "name": "rmox",
   "description": "不一样的react状态机",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
   "module": "lib/esm/index.esm.js",
