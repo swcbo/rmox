@@ -1,8 +1,8 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { isEqual, pickStore } from 'src/helpers/utils';
+import React, { FC, useEffect, useRef } from 'react';
 import Observer from '../helpers/observer';
+import { isEqual, pickStore } from '../helpers/utils';
+import useUpdate from '../hooks/useUpdate';
 export type ModelObj = { [key: string]: any };
-type ModelHooks<T extends ModelObj, P> = (init?: P) => T;
 declare global {
   interface Window {
     modelStore: { [key: string]: Observer<any> };
@@ -13,44 +13,35 @@ if (!window.modelStore) {
   window.modelStore = {};
 }
 const createModel = <T extends ModelObj, P>(
-  useHook: ModelHooks<T, P>,
+  useHook: (init?: P) => T,
   storeName: string,
 ) => {
   if (!window.modelStore[storeName]) {
     window.modelStore[storeName] = new Observer<T>();
   }
   const observer: Observer<T> = window.modelStore[storeName];
-  let isInitModel = true;
-  const Provider: FC<{ init?: P }> = ({ children, init }) => {
+  const Provider: FC<{ init: P }> = ({ children, init }) => {
     const hookState = useHook(init);
-    const isInit = useRef(true);
     if (!observer.state) {
       observer.setState(hookState);
     }
     useEffect(() => {
-      if (!isInit.current) {
-        observer.dispatch(hookState);
-      }
-      isInit.current = false;
+      observer.dispatch(hookState);
+      return () => observer.setState(undefined);
     }, [hookState]);
-    useEffect(() => {
-      isInitModel = false;
-      return () => {
-        if (!isInitModel) {
-          observer.setState(undefined);
-        }
-      };
-    }, []);
     return <>{children}</>;
   };
+
   const useModel = () => {
-    const [state, setState] = useState<T>((observer.state!! || {}) as T);
+    const update = useUpdate();
+    const state = useRef((observer.state!! || {}) as T);
     const depsFnRef = useRef<string[]>([]);
     const isInit = useRef(false);
+    const realData = state.current;
     if (!isInit.current) {
-      Object.keys(state).forEach((v) => {
-        const value = state[v];
-        Object.defineProperty(state, v, {
+      Object.keys(realData).forEach((v) => {
+        const value = realData[v];
+        Object.defineProperty(realData, v, {
           get: () => {
             if (!depsFnRef.current.includes(v)) {
               depsFnRef.current.push(v);
@@ -60,27 +51,24 @@ const createModel = <T extends ModelObj, P>(
         });
       });
     }
-    const depsRef = useRef(pickStore(depsFnRef.current, state));
+    const oldStore = useRef(pickStore(depsFnRef.current, state));
     isInit.current = true;
     useEffect(() => {
-      const unsubscribe = observer.subscribe((nextState: T) => {
+      return observer.subscribe((nextState: T) => {
+        state.current = nextState;
         if (!depsFnRef.current) {
-          setState(nextState!!);
+          update();
           return;
         }
-        const oldDeps = depsRef.current;
+        state.current = nextState;
         const newDeps = pickStore(depsFnRef.current, nextState);
-        if (!isEqual(oldDeps, newDeps)) {
-          setState(nextState!!);
+        if (!isEqual(oldStore.current, newDeps)) {
+          update();
         }
-
-        depsRef.current = newDeps;
+        oldStore.current = newDeps;
       });
-      return () => {
-        unsubscribe();
-      };
     }, []);
-    return state;
+    return state.current;
   };
   useModel.Provider = Provider;
   useModel.getState = () => observer.state!!;

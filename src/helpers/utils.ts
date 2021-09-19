@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:49:34
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-17 23:42:40
+ * @LastEditTime: 2021-09-19 01:04:09
  */
 import { ModelObj } from 'src/core';
 // uuid
@@ -18,6 +18,10 @@ export const uuid = () => {
 const isObject = (obj: any) => {
   return typeof obj === 'object' && obj !== null;
 };
+// 是否是方法
+const isFunction = (obj: any) => {
+  return typeof obj === 'function' && obj !== null;
+};
 // 获取对象里面的指定值
 export const pick = (obj: ModelObj, arr: string[]) =>
   arr.reduce(
@@ -27,6 +31,9 @@ export const pick = (obj: ModelObj, arr: string[]) =>
 
 // 判断对象是否相等
 export const isEqual = (old: ModelObj, now: ModelObj) => {
+  if (isFunction(now)) {
+    return true;
+  }
   if (!isObject(old) || !isObject(now)) {
     return old === now;
   }

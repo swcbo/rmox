@@ -1,10 +1,10 @@
 {
-  "name": "@cfdo/rmox",
+  "name": "rmox",
   "description": "不一样的react状态机",
-  "version": "0.0.9",
+  "version": "0.2.0",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
-  "module": "lib/esm/index.js",
+  "module": "lib/esm/index.esm.js",
   "unpkg": "lib/umd/index.min.js",
   "main": "lib/cjs/index.js",
   "private": false,

@@ -6,23 +6,23 @@
 <br/>
 <p align="center">
  <a href="https://travis-ci.com/q1104133609/rmox"><img src="https://app.travis-ci.com/q1104133609/rmox.svg?branch=main" alt="npm package"></a>
-  <a href="https://npmjs.com/package/@cfdo/rmox"><img src="https://img.shields.io/npm/v/@cfdo/rmox.svg?logo=npm" alt="npm package"></a>
-  <a href="https://bundlephobia.com/package/@cfdo/rmox@latest"><img src="https://img.shields.io/bundlephobia/min/@cfdo/rmox.svg?logo=typescript" alt="size"></a>
-  <img src="https://img.shields.io/npm/dependency-version/@cfdo/rmox/peer/react?logo=react" alt="react version">
+  <a href="https://npmjs.com/package/rmox"><img src="https://img.shields.io/npm/v/rmox.svg?logo=npm" alt="npm package"></a>
+  <a href="https://bundlephobia.com/package/rmox@latest"><img src="https://img.shields.io/bundlephobia/min/rmox.svg?logo=typescript" alt="size"></a>
+  <img src="https://img.shields.io/npm/dependency-version/rmox/peer/react?logo=react" alt="react version">
 </p>
 <br/>
 <img  src="./doc/textlogo.svg" alt="rmox logo" height="60">
 
-> 一个不一样的状态机管理器
+> 一个不一样的 react 状态机管理器
 
 - 支持全局与局部状态管理(局部状态管理退出即销毁)
 - 使用自定义 Hooks 定义 model
-- 使用到的数据源改变才会触发 render
+- render 优化(只有绑定的数据改变才会触发 render)
 - 支持 model 嵌套
 
-<!-- ## 在线体验
+## 在线体验
 
-[![Edit](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/todo-app-with-hox-2gvgg) -->
+[![Edit](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/heuristic-hill-356xk)
 
 ## 安装
 
@@ -32,16 +32,15 @@ yarn add rmox
 npm install --save rmox
 ```
 
-## 快速上手
+<!-- ## 快速上手
 
-<!--
 ### 创建一个 model
 
 在 hox 中，任意的 custom Hook，经过 `createModel` 包装后，就变成了持久化，且全局共享的数据。
 
 ```jsx
 import { useState } from 'react';
-import { createModel } from 'hox';
+import { createModel } from 'rmox';
 
 function useCounter() {
   const [count, setCount] = useState(0);
