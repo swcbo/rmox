@@ -4,12 +4,14 @@
  * @Author: 小白
  * @Date: 2021-09-17 21:04:00
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-18 15:01:21
+ * @LastEditTime: 2021-09-20 11:05:24
  */
 import resolve from 'rollup-plugin-node-resolve'; // 依赖引用插件
 import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
 import ts from 'rollup-plugin-typescript2';
 import packageJSON from './package.json';
+import babel from 'rollup-plugin-babel';
+import { uglify } from 'rollup-plugin-uglify';
 const outConfig = {
   sourcemap: true,
   name: packageJSON.name,
@@ -20,7 +22,15 @@ const outConfig = {
 };
 export default {
   input: 'src/index.ts',
-  plugins: [resolve(), commonjs(), ts({ useTsconfigDeclarationDir: true })],
+  plugins: [
+    uglify(),
+    resolve(),
+    commonjs(),
+    ts({ useTsconfigDeclarationDir: true }),
+    babel({
+      exclude: 'node_modules/**', // 只编译我们的源代码
+    }),
+  ],
   external: ['react', 'react/jsx-runtime'],
   output: [
     {

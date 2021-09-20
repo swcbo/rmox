@@ -1,7 +1,5 @@
-import React from 'react';
-import useCounter from '../../models/useCounter';
-import useMoneyModel from '../../models/useMoneyModel';
-import useUserModel from '../../models/useUserModel';
+import React, { memo } from 'react';
+import useCounterModel from '../../models/useCounterModel';
 
 /*
  * @Descripttion:
@@ -9,14 +7,15 @@ import useUserModel from '../../models/useUserModel';
  * @Author: 小白
  * @Date: 2021-09-19 09:55:41
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 19:05:17
+ * @LastEditTime: 2021-09-20 10:59:00
  */
 const Count = () => {
-  const { count } = useCounter();
+  const { count } = useCounterModel();
+  console.log('count Render了');
   return (
     <>
       <div style={{ fontSize: 30 }}>个数：{count}</div>
     </>
   );
 };
-export default Count;
+export default memo(Count);

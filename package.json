@@ -1,7 +1,7 @@
 {
   "name": "rmox",
   "description": "React Hook 状态机",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
   "module": "lib/esm/index.esm.js",
@@ -40,6 +40,7 @@
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-uglify": "^6.0.4",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },

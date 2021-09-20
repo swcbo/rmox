@@ -7,7 +7,7 @@ import { createModel } from 'rmox';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 19:55:18
+ * @LastEditTime: 2021-09-20 11:00:06
  */
 const useUserModel = () => {
   const [age, setAge] = useState(0);

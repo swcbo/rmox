@@ -11,37 +11,37 @@ export default <T extends ModelObj, P>(
   const model = () => {
     const update = useUpdate();
     const state = useRef<T>((observer.state!! || {}) as T);
-    const depsFnRef = useRef<string[]>([]);
+    const depsFn = useRef<string[]>([]);
     const isInit = useRef(false);
-    const realData = state.current;
     if (!isInit.current) {
-      Object.keys(realData).forEach((v) => {
-        const value = realData[v];
-        Object.defineProperty(realData, v, {
+      const current = state.current;
+      Object.keys(current).forEach((v) => {
+        const value = current[v];
+        Object.defineProperty(current, v, {
           get: () => {
-            if (!depsFnRef.current.includes(v)) {
-              depsFnRef.current.push(v);
+            if (!depsFn.current.includes(v)) {
+              depsFn.current.push(v);
             }
             return value;
           },
         });
       });
     }
-    const oldStore = useRef(pickStore(depsFnRef.current, state));
+    const old = useRef(pickStore(depsFn.current, state));
     isInit.current = true;
     useEffect(() => {
       return observer.subscribe((nextState: T) => {
         state.current = nextState;
-        if (!depsFnRef.current) {
+        if (!depsFn.current) {
           update();
           return;
         }
         state.current = nextState;
-        const newDeps = pickStore(depsFnRef.current, nextState);
-        if (!isEqual(oldStore.current, newDeps)) {
+        const now = pickStore(depsFn.current, nextState);
+        if (!isEqual(old.current, now)) {
           update();
         }
-        oldStore.current = newDeps;
+        old.current = now;
       });
     }, []);
     return state.current;

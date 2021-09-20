@@ -1,5 +1,6 @@
 import React from 'react';
 import useMoneyModel from '../../models/useMoneyModel';
+import { RmoxInstantce } from 'rmox';
 
 /*
  * @Descripttion:
@@ -7,14 +8,16 @@ import useMoneyModel from '../../models/useMoneyModel';
  * @Author: 小白
  * @Date: 2021-09-19 18:44:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 19:07:01
+ * @LastEditTime: 2021-09-20 10:59:14
  */
 const Todo = () => {
   const { money } = useMoneyModel();
-  const { addMoney } = useMoneyModel();
+  const { addMoney, addAge } = useMoneyModel();
+  console.log(RmoxInstantce.store);
   return (
     <div>
       金额：{money} <button onClick={addMoney}>+</button>
+      <button onClick={addAge}>添加年龄</button>
     </div>
   );
 };
