@@ -7,20 +7,17 @@
  * @LastEditTime: 2021-09-21 09:00:19
  */
 import React, { useState } from 'react';
-import './index.css';
 import Counter from './components/Counter';
 import Count from './components/Counter/count';
 import Todo from './components/Todo';
+import './index.css';
 import useCounterModel from './models/useCounterModel';
 import useUserModel from './models/useUserModel';
-import useMoneyModel from './models/useMoneyModel';
 
 function App() {
-  console.log('333333');
   const [show, setShow] = useState(true);
   const [detail, showDetail] = useState(true);
   const { addAge, age } = useUserModel();
-  console.log(useMoneyModel.getData(), 'App');
   return (
     <div className="App" style={{ fontSize: 30 }}>
       {show && (

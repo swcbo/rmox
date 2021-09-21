@@ -176,7 +176,7 @@ export default Counter;
 
 ## modelHook 依赖调用
 
-> 在实际开发过程中多多少少会存在定义的模块之间的依赖管理,在`rmox`中局部和全局 model 都支持各个`modelHook`之间依赖`当然还需要小心循环依赖的问题`
+> `rmox`支持模块之间的相互依赖
 
 ```tsx
 import { useState } from 'react';
@@ -203,6 +203,10 @@ const counterState = counter.state;
 // 直接修改内容
 counter.dispatch({ ...counterState, count: 10 });
 ```
+
+# 注意
+
+> 依赖必须为单向流,`禁止循环嵌套`,且全局与局部 model 之间`不需要全局依赖局部model`
 
 # API 介绍
 

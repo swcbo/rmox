@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import useCounterModel from '../../models/useCounterModel';
 
 /*
@@ -7,11 +7,11 @@ import useCounterModel from '../../models/useCounterModel';
  * @Author: 小白
  * @Date: 2021-09-18 22:31:33
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-20 23:28:10
+ * @LastEditTime: 2021-09-21 11:29:29
  */
 const Counter = () => {
   const { del, add, setTest } = useCounterModel();
-  console.log('Counter render');
+  console.log('Counter render', add);
   return (
     <>
       <button onClick={add}>+</button>
@@ -20,4 +20,4 @@ const Counter = () => {
     </>
   );
 };
-export default Counter;
+export default memo(Counter);
