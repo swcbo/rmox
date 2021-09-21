@@ -4,9 +4,9 @@
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 09:00:19
+ * @LastEditTime: 2021-09-21 16:37:38
  */
-import React, { useState } from 'react';
+import React, { StrictMode, useState } from 'react';
 import Counter from './components/Counter';
 import Count from './components/Counter/count';
 import Todo from './components/Todo';
