@@ -7,14 +7,17 @@ import Observer from '../helpers/observer';
 export default <T extends ModelObj, P>(
   observer: Observer<T>,
   Provider: FC<{ init?: P }>,
+  name: string,
 ) => {
   const model = () => {
+    const { state, subscribe } = observer;
     const update = useUpdate();
-    const state = useRef<T>((observer.state!! || {}) as T);
+    const store = useRef<T>(({ ...state } || {}) as T);
     const depsFn = useRef<string[]>([]);
     const isInit = useRef(false);
+    const current = store.current;
+    const old = useRef(pickStore(depsFn.current, current));
     if (!isInit.current) {
-      const current = state.current;
       Object.keys(current).forEach((v) => {
         const value = current[v];
         Object.defineProperty(current, v, {
@@ -26,17 +29,11 @@ export default <T extends ModelObj, P>(
           },
         });
       });
+      isInit.current = true;
     }
-    const old = useRef(pickStore(depsFn.current, state));
-    isInit.current = true;
     useEffect(() => {
-      return observer.subscribe((nextState: T) => {
-        state.current = nextState;
-        if (!depsFn.current) {
-          update();
-          return;
-        }
-        state.current = nextState;
+      return subscribe((nextState: T) => {
+        store.current = nextState;
         const now = pickStore(depsFn.current, nextState);
         if (!isEqual(old.current, now)) {
           update();
@@ -44,8 +41,10 @@ export default <T extends ModelObj, P>(
         old.current = now;
       });
     }, []);
-    return state.current;
+    return current;
   };
   model.Provider = Provider;
+  model.dispatch = observer.dispatch;
+  model.getData = () => observer.state;
   return model;
 };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { createModel } from 'rmox';
+import { createModel } from '../../../src/index';
+import useTestModel from './useTestModel';
 import useUserModel from './useUserModel';
 
 /*
@@ -8,12 +9,13 @@ import useUserModel from './useUserModel';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-20 11:00:01
+ * @LastEditTime: 2021-09-21 10:03:57
  */
 const useMoneyModel = () => {
-  const [money, setMoney] = useState(100);
   const { addAge } = useUserModel();
+  const [money, setMoney] = useState(100);
   const addMoney = () => setMoney((money) => money + 1);
+  console.log(addAge, 'useMoneyModel');
   return { addMoney, money, addAge };
 };
-export default createModel(useMoneyModel, 'money', true);
+export default createModel(useMoneyModel, true);

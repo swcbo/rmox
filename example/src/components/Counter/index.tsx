@@ -7,10 +7,11 @@ import useCounterModel from '../../models/useCounterModel';
  * @Author: 小白
  * @Date: 2021-09-18 22:31:33
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-20 10:59:09
+ * @LastEditTime: 2021-09-20 23:28:10
  */
 const Counter = () => {
   const { del, add, setTest } = useCounterModel();
+  console.log('Counter render');
   return (
     <>
       <button onClick={add}>+</button>

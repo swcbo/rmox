@@ -13,7 +13,7 @@
 <br/>
 <img  src="./doc/textlogo.svg" alt="rmox logo" height="60">
 
-> React Hook 状态机
+> React Hook 状态管理器
 
 - 支持全局与局部状态管理(局部状态管理退出即销毁)
 - 使用自定义 Hook 定义 model
@@ -58,7 +58,7 @@ ReactDOM.render(
 
 ### 创建 modelHook
 
-> 通过`createModel`创建一个 `modelHook ` 第二个参数为 `storeName`方便通过 `RmoxInstantce` 在任何位置查看以及获取 `model` 内容,第三个参数为是否为全局 model
+> 通过`createModel`创建一个 `modelHook `,第二个参数为是否为全局 model
 
 ```tsx
 const useUserModel = () => {
@@ -99,14 +99,13 @@ const useCounterModel = () => {
   const [count, setCount] = useState(0);
   const del = () => setCount(count - 1);
   const add = () => setCount(count + 1);
-  console.log(count);
   return {
     count,
     add,
     del,
   };
 };
-export default createModel(useCounterModel, 'counter');
+export default createModel(useCounterModel);
 ```
 
 > 由于 rmox 局部 model 需要一个挂载点,使用需要给局部块添加`Provier`
@@ -190,36 +189,29 @@ const useMoneyModel = () => {
   const addMoney = () => setMoney((money) => money + 1);
   return { addMoney, money, addAge };
 };
-export default createModel(useMoneyModel, 'money', true);
+export default createModel(useMoneyModel, true);
 ```
 
-## Rmox 全局单利(支持对 model 获取以及修改)
+## Rmox 全局单例(支持对 model 获取以及修改)
 
 > 在实际过程中可能在不是组件的环境中需要获取到`modelHook`内容,`rmox`提供了单利可支持任何环境中中直接修改和查看指定 model 的内容
 
 ```tsx
 import { RmoxInstantce } from 'rmox';
-// 指定model(storeName)
-const counter = RmoxInstantce['counter'].
 // model内容
 const counterState = counter.state;
 // 直接修改内容
-counter.dispatch({...counterState,count:10})
+counter.dispatch({ ...counterState, count: 10 });
 ```
 
 # API 介绍
 
 ## createModel(创建 model)
 
-| 参数      | 描述                                  | 默认  | 必填 |
-| --------- | ------------------------------------- | ----- | ---- |
-| useHook   | 具体的 `modelHook`                    | --    | 是   |
-| storeName | model 名称,使用单利查询内容的时候用到 | --    | 是   |
-| global    | 是否是全局                            | false | 否   |
-
-## RmoxInstantce(remox 单利)
-
-> 是一个 model 的集合,key 为`modelHook`的`storeName`,可以直接获取`modelHook`与操作内部内容
+| 参数    | 描述               | 默认  | 必填 |
+| ------- | ------------------ | ----- | ---- |
+| useHook | 具体的 `modelHook` | --    | 是   |
+| global  | 是否是全局         | false | 否   |
 
 ## GlobalProvider(全局提供者)
 
