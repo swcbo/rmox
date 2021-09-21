@@ -192,21 +192,21 @@ const useMoneyModel = () => {
 export default createModel(useMoneyModel, true);
 ```
 
-## Rmox 全局单例(支持对 model 获取以及修改)
+## 在任意位置获取`model`内容以及修改`store`
 
-> 在实际过程中可能在不是组件的环境中需要获取到`modelHook`内容,`rmox`提供了单利可支持任何环境中中直接修改和查看指定 model 的内容
+> 在实际过程中可能在不是组件的环境中需要获取到`modelHook`内容,`rmox`给 model 对象上附带对应的属性犯法
 
 ```tsx
-import { RmoxInstantce } from 'rmox';
+import useUserModel from './useUserModel';
 // model内容
-const counterState = counter.state;
+const counterState = useUserModel.getData();
 // 直接修改内容
-counter.dispatch({ ...counterState, count: 10 });
+useUserModel.dispatch({ ...useUserModel.getData(), count: 10 });
 ```
 
 # 注意
 
-> 依赖必须为单向流,`禁止循环嵌套`,且全局与局部 model 之间`不需要全局依赖局部model`
+> 依赖必须为单向流,`禁止循环嵌套`,且全局与局部 model 之间`不允许全局依赖局部model`
 
 # API 介绍
 

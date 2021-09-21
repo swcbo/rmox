@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: 小白
+ * @Date: 2021-09-20 21:31:16
+ * @LastEditors: 小白
+ * @LastEditTime: 2021-09-21 15:20:00
+ */
 import { useRef, useEffect, FC } from 'react';
 import { isEqual, pickStore } from '../helpers/utils';
 import useUpdate from './useUpdate';

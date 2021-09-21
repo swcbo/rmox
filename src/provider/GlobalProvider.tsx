@@ -1,6 +1,6 @@
-import React, { FC, memo, useCallback, useState } from 'react';
+import React, { memo, ReactNode, useCallback, useState } from 'react';
 import Rmox from '../core/rmox';
-const GlobalProvider: FC = ({ children }) => {
+const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [models, _] = useState(Rmox.getInstance().globalModel);
   const render = useCallback(
     (children) =>

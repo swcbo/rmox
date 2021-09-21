@@ -1,10 +1,18 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: 小白
+ * @Date: 2021-09-20 21:31:16
+ * @LastEditors: 小白
+ * @LastEditTime: 2021-09-21 15:19:54
+ */
 import React, { FC, memo, useEffect, useRef } from 'react';
 import Observer from '../helpers/observer';
 export default <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
   const Wrapper: FC<{ init?: P }> = ({ children, init }) => {
+    const hookState = useHook(init);
     const { state, setState, dispatch } = observer;
     const isInit = useRef(true);
-    const hookState = useHook(init);
     if (!state) {
       setState(hookState);
     }
