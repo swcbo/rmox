@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createModel } from '../../../src/index';
+import { createModel } from 'rmox';
 import useMoneyModel from './useMoneyModel';
 
 /*

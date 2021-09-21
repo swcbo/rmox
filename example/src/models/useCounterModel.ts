@@ -4,10 +4,10 @@
  * @Author: 小白
  * @Date: 2021-09-18 22:27:18
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 15:30:45
+ * @LastEditTime: 2021-09-21 16:42:17
  */
 import { useState } from 'react';
-import { createModel } from '../../../src/index';
+import { createModel } from 'rmox';
 import useUserModel from './useUserModel';
 const useCounterModel = (init?: number) => {
   const { addAge } = useUserModel();
