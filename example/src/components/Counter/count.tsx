@@ -7,10 +7,11 @@ import useCounterModel from '../../models/useCounterModel';
  * @Author: 小白
  * @Date: 2021-09-19 09:55:41
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 15:39:48
+ * @LastEditTime: 2021-09-21 16:52:25
  */
 const Count = () => {
   const { count } = useCounterModel();
+  console.log('Count render');
   return (
     <>
       <div style={{ fontSize: 30 }}>个数：{count}</div>

@@ -4,12 +4,12 @@
  * @Author: 小白
  * @Date: 2021-09-20 21:31:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 15:19:54
+ * @LastEditTime: 2021-09-21 17:26:58
  */
-import React, { FC, memo, useEffect, useRef } from 'react';
+import React, { useMemo, FC, memo, useEffect, useRef } from 'react';
 import Observer from '../helpers/observer';
-export default <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
-  const Wrapper: FC<{ init?: P }> = ({ children, init }) => {
+const Provider = <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
+  const Wrapper: FC<{ init?: P }> = ({ init, children }) => {
     const hookState = useHook(init);
     const { state, setState, dispatch } = observer;
     const isInit = useRef(true);
@@ -23,7 +23,8 @@ export default <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
       isInit.current = false;
       return () => setState(undefined);
     }, [hookState]);
-    return <>{children}</>;
+    return useMemo(() => <>{children}</>, []);
   };
   return memo(Wrapper);
 };
+export default Provider;

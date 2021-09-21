@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-17 21:04:00
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-20 11:05:24
+ * @LastEditTime: 2021-09-21 17:44:47
  */
 import resolve from 'rollup-plugin-node-resolve'; // 依赖引用插件
 import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
@@ -34,12 +34,12 @@ export default {
   external: ['react', 'react/jsx-runtime'],
   output: [
     {
-      file: 'lib/umd/index.min.js', // 通用模块
+      file: 'lib/umd/index.js', // 通用模块
       format: 'umd',
       ...outConfig,
     },
     {
-      file: 'lib/esm/index.esm.js', // 通用模块
+      file: 'lib/esm/index.js', // 通用模块
       format: 'es',
       ...outConfig,
     },

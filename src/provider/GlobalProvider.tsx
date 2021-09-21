@@ -1,4 +1,4 @@
-import React, { memo, ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useState } from 'react';
 import Rmox from '../core/rmox';
 const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [models, _] = useState(Rmox.getInstance().globalModel);
@@ -13,4 +13,4 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   return <>{render(children)}</>;
 };
 
-export default memo(GlobalProvider);
+export default GlobalProvider;

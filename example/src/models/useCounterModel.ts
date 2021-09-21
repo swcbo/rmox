@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-18 22:27:18
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 16:42:17
+ * @LastEditTime: 2021-09-21 17:24:59
  */
 import { useState } from 'react';
 import { createModel } from 'rmox';
@@ -15,6 +15,7 @@ const useCounterModel = (init?: number) => {
   const [test, setTest] = useState(1);
   const del = () => setCount((count) => count - 1);
   const add = () => setCount(count + 1);
+  console.log(addAge);
   return {
     count,
     add,
