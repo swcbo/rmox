@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-17 21:04:00
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 17:44:47
+ * @LastEditTime: 2021-09-22 22:45:08
  */
 import resolve from 'rollup-plugin-node-resolve'; // 依赖引用插件
 import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
@@ -12,6 +12,7 @@ import ts from 'rollup-plugin-typescript2';
 import packageJSON from './package.json';
 import babel from 'rollup-plugin-babel';
 import { uglify } from 'rollup-plugin-uglify';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 const outConfig = {
   sourcemap: true,
   name: packageJSON.name,
@@ -23,7 +24,8 @@ const outConfig = {
 export default {
   input: 'src/index.ts',
   plugins: [
-    uglify(),
+    sizeSnapshot(),
+    uglify({ toplevel: true }),
     resolve(),
     commonjs(),
     ts({ useTsconfigDeclarationDir: true }),
