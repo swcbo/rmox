@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createModel } from 'rmox';
+import { createModel } from '../../../src/index';
 import useMoneyModel from './useMoneyModel';
 
 /*
@@ -8,7 +8,7 @@ import useMoneyModel from './useMoneyModel';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 10:09:51
+ * @LastEditTime: 2021-09-21 21:06:29
  */
 const useTestModel = () => {
   const { addAge } = useMoneyModel();

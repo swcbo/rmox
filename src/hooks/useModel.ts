@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-20 21:31:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 15:40:06
+ * @LastEditTime: 2021-09-22 19:18:05
  */
 import { useRef, useEffect, FC } from 'react';
 import { isEqual, pickStore } from '../helpers/utils';
@@ -24,7 +24,6 @@ export default <T extends ModelObj, P>(
     const store = useRef<T>({ ...state } as T);
     const depsFn = useRef<string[]>([]);
     const current = store.current;
-    const old = useRef(current);
     useInit(() => {
       Object.keys(current).forEach((v) => {
         const value = current[v];
@@ -39,17 +38,17 @@ export default <T extends ModelObj, P>(
       });
     });
     useEffect(() => {
+      update();
       return subscribe((nextState: T) => {
-        store.current = nextState;
         if (
           !isEqual(
-            pickStore(depsFn.current, old.current),
+            pickStore(depsFn.current, store.current),
             pickStore(depsFn.current, nextState),
           )
         ) {
           update();
         }
-        old.current = nextState;
+        store.current = nextState;
       });
     }, []);
     if (!Object.keys(current).length) {

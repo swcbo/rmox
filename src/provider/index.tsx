@@ -4,9 +4,9 @@
  * @Author: 小白
  * @Date: 2021-09-20 21:31:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 17:26:58
+ * @LastEditTime: 2021-09-22 19:06:42
  */
-import React, { useMemo, FC, memo, useEffect, useRef } from 'react';
+import React, { FC, memo, useEffect, useMemo, useRef } from 'react';
 import Observer from '../helpers/observer';
 const Provider = <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
   const Wrapper: FC<{ init?: P }> = ({ init, children }) => {
@@ -16,6 +16,7 @@ const Provider = <T, P>(observer: Observer<T>, useHook: (init?: P) => T) => {
     if (!state) {
       setState(hookState);
     }
+
     useEffect(() => {
       if (!isInit.current) {
         dispatch(hookState);

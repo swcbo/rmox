@@ -4,10 +4,9 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:49:34
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-19 01:04:09
+ * @LastEditTime: 2021-09-22 19:19:41
  */
 import { ModelObj } from 'src/core';
-// uuid
 export const uuid = () => {
   const tempUrl = URL.createObjectURL(new Blob());
   const uuId = tempUrl.toString();
@@ -31,23 +30,17 @@ export const pick = (obj: ModelObj, arr: string[]) =>
 
 // 判断对象是否相等
 export const isEqual = (old: ModelObj, now: ModelObj) => {
-  if (isFunction(now)) {
-    return true;
-  }
-  if (!isObject(old) || !isObject(now)) {
-    return old === now;
+  if (isFunction(now) || !isObject(old)) {
+    return now === old;
   }
   if (old === now) {
     return true;
   }
-  const oldKeys = Object.keys(old);
-  const nowKeys = Object.keys(now);
-  if (oldKeys.length !== nowKeys.length) {
+  if (Object.keys(old).length !== Object.keys(now).length) {
     return false;
   }
   for (let key in old) {
-    const res = isEqual(old[key], now[key]);
-    if (!res) {
+    if (!isEqual(old[key], now[key])) {
       return false;
     }
   }
