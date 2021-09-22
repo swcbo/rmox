@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-20 21:31:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-22 19:18:05
+ * @LastEditTime: 2021-09-22 21:35:44
  */
 import { useRef, useEffect, FC } from 'react';
 import { isEqual, pickStore } from '../helpers/utils';
@@ -38,7 +38,6 @@ export default <T extends ModelObj, P>(
       });
     });
     useEffect(() => {
-      update();
       return subscribe((nextState: T) => {
         if (
           !isEqual(
