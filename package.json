@@ -1,7 +1,7 @@
 {
   "name": "rmox",
   "description": "React Hook 状态机",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
   "module": "lib/esm/index.js",
