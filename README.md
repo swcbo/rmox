@@ -58,7 +58,7 @@ ReactDOM.render(
 
 ### 创建 modelHook
 
-> 通过`createModel`创建一个 `modelHook `,第二个参数为是否为全局 model
+> 通过`createModel`创建一个 `modelHook `,第二个参数为 对应配置 `global`为是否为全局
 
 ```tsx
 const useUserModel = () => {
@@ -66,7 +66,7 @@ const useUserModel = () => {
   const addAge = () => setAge((age) => age + 1);
   return { addAge, age };
 };
-export default createModel(useUserModel, 'user', true);
+export default createModel(useUserModel, { global: true });
 ```
 
 ### 组件内使用 modelHook

@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-21 21:42:44
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-22 22:29:02
+ * @LastEditTime: 2021-09-23 21:50:13
  */
 import React, { FC, memo, useEffect, useMemo } from 'react';
 import useInit from '../hooks/useInit';
@@ -13,10 +13,14 @@ import useModel from '../hooks/useModel';
 import Rmox from './rmox';
 const rmoxStore = Rmox.getInstance().store;
 export type ModelObj = { [key: string]: any };
+export type ModelOptions = {
+  global?: boolean; // 是否是全局
+};
 const createModel = <P, T extends ModelObj>(
   useHook: (init?: P) => T,
-  global = false,
+  options?: ModelOptions,
 ) => {
+  const { global } = options || {};
   const name = useHook.name;
   if (!rmoxStore[name]) {
     rmoxStore[name] = new Observer<T>();

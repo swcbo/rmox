@@ -8,7 +8,7 @@ import useUserModel from './useUserModel';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 21:06:16
+ * @LastEditTime: 2021-09-23 22:18:49
  */
 const useMoneyModel = () => {
   const { addAge } = useUserModel();
@@ -17,4 +17,4 @@ const useMoneyModel = () => {
   console.log(addAge, 'useMoneyModel');
   return { addMoney, money, addAge };
 };
-export default createModel(useMoneyModel, true);
+export default createModel(useMoneyModel, { global: true });
