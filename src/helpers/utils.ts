@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-16 22:49:34
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-22 19:19:41
+ * @LastEditTime: 2021-09-24 12:53:04
  */
 import { ModelObj } from 'src/core';
 export const uuid = () => {
@@ -36,7 +36,7 @@ export const isEqual = (old: ModelObj, now: ModelObj) => {
   if (old === now) {
     return true;
   }
-  if (Object.keys(old).length !== Object.keys(now).length) {
+  if (!old || !now || Object.keys(old).length !== Object.keys(now).length) {
     return false;
   }
   for (let key in old) {

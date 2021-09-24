@@ -4,9 +4,9 @@
  * @Author: 小白
  * @Date: 2021-09-21 21:42:44
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-23 21:50:13
+ * @LastEditTime: 2021-09-24 13:02:11
  */
-import React, { FC, memo, useEffect, useMemo } from 'react';
+import React, { FC, memo, useEffect, useMemo, cloneElement } from 'react';
 import useInit from '../hooks/useInit';
 import Observer from '../helpers/observer';
 import useModel from '../hooks/useModel';
@@ -26,7 +26,7 @@ const createModel = <P, T extends ModelObj>(
     rmoxStore[name] = new Observer<T>();
   }
   const observer = rmoxStore[name];
-  const Provider: FC<{ init?: P }> = ({ init, children }) => {
+  const Provider: FC<{ init?: P }> = ({ init, children, ...props }) => {
     const hookState = useHook(init);
     const { state, setState, dispatch } = observer;
     if (!state) {
@@ -42,7 +42,11 @@ const createModel = <P, T extends ModelObj>(
       }
       return () => setState(undefined);
     }, [hookState]);
-    return useMemo(() => <>{children}</>, []);
+    const render = useMemo(
+      () => <>{cloneElement(<>{children}</>, props)}</>,
+      [children],
+    );
+    return render;
   };
   const provider = memo(Provider);
   if (global) {
