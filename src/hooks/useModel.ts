@@ -1,11 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: 小白
- * @Date: 2021-09-20 21:31:16
- * @LastEditors: 小白
- * @LastEditTime: 2021-09-22 21:35:44
- */
 import { useRef, useEffect, FC } from 'react';
 import { isEqual, pickStore } from '../helpers/utils';
 import useUpdate from './useUpdate';
@@ -23,7 +15,7 @@ export default <T extends ModelObj, P>(
     const update = useUpdate();
     const store = useRef<T>({ ...state } as T);
     const depsFn = useRef<string[]>([]);
-    const current = store.current;
+    let current = store.current;
     useInit(() => {
       Object.keys(current).forEach((v) => {
         const value = current[v];
@@ -37,6 +29,7 @@ export default <T extends ModelObj, P>(
         });
       });
     });
+
     useEffect(() => {
       return subscribe((nextState: T) => {
         if (
@@ -51,7 +44,7 @@ export default <T extends ModelObj, P>(
       });
     }, []);
     if (!Object.keys(current).length) {
-      console.error(
+      console.warn(
         `${name} Initialization failed due to loop nesting or parent call subset`,
       );
     }

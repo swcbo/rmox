@@ -4,6 +4,7 @@ export default class Rmox {
   static _instance: Rmox | null = null;
   store: { [key: string]: Observer<any> } = {};
   globalModel: FC<any>[] = [];
+  observer = new Observer<any>();
   public static getInstance() {
     if (Rmox._instance === null) {
       Rmox._instance = new Rmox();

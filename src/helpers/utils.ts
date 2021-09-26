@@ -1,11 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: 小白
- * @Date: 2021-09-16 22:49:34
- * @LastEditors: 小白
- * @LastEditTime: 2021-09-24 12:53:04
- */
 import { ModelObj } from 'src/core';
 export const uuid = () => {
   const tempUrl = URL.createObjectURL(new Blob());

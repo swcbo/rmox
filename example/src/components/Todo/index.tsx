@@ -7,7 +7,7 @@ import useMoneyModel from '../../models/useMoneyModel';
  * @Author: 小白
  * @Date: 2021-09-19 18:44:16
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-21 10:09:41
+ * @LastEditTime: 2021-09-26 17:27:30
  */
 const Todo = () => {
   const { money, addMoney, addAge } = useMoneyModel();
@@ -19,4 +19,4 @@ const Todo = () => {
   );
 };
 
-export default memo(Todo);
+export default Todo;
