@@ -5,13 +5,13 @@ const Wrapper = () => {
   const [models, setModels] = useState(rmox.globalModel);
   useEffect(() => {
     rmox.observer.subscribe(() => {
-      setModels({ ...rmox.globalModel });
+      setModels([...rmox.globalModel]);
     });
   }, []);
   return useMemo(
     () =>
-      Object.values(models).reduce(
-        (p, C) => (
+      models.reduce(
+        (p, { provider: C }) => (
           <>
             <C />
             {p}

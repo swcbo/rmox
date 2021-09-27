@@ -23,7 +23,6 @@
     "lib": ["es6", "dom"], // 导入库类型定义
     "types": ["node"] // 导入指定类型包
   },
-
-  "include": ["./src/*"],
+  "include": ["./src/*", "./rollup.config.ts", "./src/core/connect.tsx"],
   "exclude": ["./node_modules/**/*"]
 }

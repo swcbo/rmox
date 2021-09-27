@@ -10,10 +10,9 @@ export default <T extends ModelObj, P>(
   Provider: FC<{ init?: P }>,
   name: string,
 ) => {
-  const model = () => {
-    const { state, subscribe } = observer;
+  const Model = () => {
     const update = useUpdate();
-    const store = useRef<T>({ ...state } as T);
+    const store = useRef<T>({ ...observer.state } as T);
     const depsFn = useRef<string[]>([]);
     let current = store.current;
     useInit(() => {
@@ -31,7 +30,7 @@ export default <T extends ModelObj, P>(
     });
 
     useEffect(() => {
-      return subscribe((nextState: T) => {
+      return observer.subscribe((nextState: T) => {
         if (
           !isEqual(
             pickStore(depsFn.current, store.current),
@@ -42,7 +41,7 @@ export default <T extends ModelObj, P>(
         }
         store.current = nextState;
       });
-    }, []);
+    }, [update]);
     if (!Object.keys(current).length) {
       console.warn(
         `${name} Initialization failed due to loop nesting or parent call subset`,
@@ -50,8 +49,8 @@ export default <T extends ModelObj, P>(
     }
     return current;
   };
-  model.Provider = Provider;
-  model.dispatch = observer.dispatch;
-  model.getData = () => observer.state;
-  return model;
+  Model.Provider = Provider;
+  Model.dispatch = observer.dispatch;
+  Model.getData = () => observer.state;
+  return Model;
 };

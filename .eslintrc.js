@@ -12,11 +12,13 @@ module.exports = {
     tsconfigRootDir: resolve('./'),
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'react-hooks'],
   rules: {
     indent: ['error', 2],
     'no-unused-vars': 'off',
     'no-console': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };

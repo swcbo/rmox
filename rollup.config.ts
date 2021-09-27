@@ -1,17 +1,12 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: 小白
- * @Date: 2021-09-17 21:04:00
- * @LastEditors: 小白
- * @LastEditTime: 2021-09-27 19:15:18
- */
 import resolve from 'rollup-plugin-node-resolve'; // 依赖引用插件
 import commonjs from 'rollup-plugin-commonjs'; // commonjs模块转换插件
 import ts from 'rollup-plugin-typescript2';
 import packageJSON from './package.json';
+// @ts-ignore
 import babel from 'rollup-plugin-babel';
+// @ts-ignore
 import { uglify } from 'rollup-plugin-uglify';
+// @ts-ignore
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 const outConfig = {
   sourcemap: true,

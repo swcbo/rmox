@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from '../../../../src/helpers/connect';
+import connect from '../../../../src/core/connect';
 import useMoneyModel from '../../models/useMoneyModel';
 import useUserModel from '../../models/useUserModel';
 
