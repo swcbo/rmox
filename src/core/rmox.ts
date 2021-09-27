@@ -3,7 +3,7 @@ import Observer from '../helpers/observer';
 export default class Rmox {
   static _instance: Rmox | null = null;
   store: { [key: string]: Observer<any> } = {};
-  globalModel: FC<any>[] = [];
+  globalModel: Record<string, FC<any>> = {};
   observer = new Observer<any>();
   public static getInstance() {
     if (Rmox._instance === null) {

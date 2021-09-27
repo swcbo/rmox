@@ -1,23 +1,31 @@
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Rmox from '../core/rmox';
-const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const [models, setModels] = useState(Rmox.getInstance().globalModel);
-  const render = useCallback(
+const rmox = Rmox.getInstance();
+const Wrapper = () => {
+  const [models, setModels] = useState(rmox.globalModel);
+  useEffect(() => {
+    rmox.observer.subscribe(() => {
+      setModels({ ...rmox.globalModel });
+    });
+  }, []);
+  return useMemo(
     () =>
-      models.reduce(
-        (parent, Component) => <Component> {parent}</Component>,
+      Object.values(models).reduce(
+        (p, C) => (
+          <>
+            <C />
+            {p}
+          </>
+        ),
         <></>,
       ),
     [models],
   );
-  useEffect(() => {
-    Rmox.getInstance().observer.subscribe(() => {
-      setModels([...Rmox.getInstance().globalModel]);
-    });
-  }, []);
+};
+const GlobalProvider: FC = ({ children }) => {
   return (
     <>
-      {render()}
+      <Wrapper />
       {children}
     </>
   );
