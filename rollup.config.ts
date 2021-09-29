@@ -4,10 +4,7 @@ import ts from 'rollup-plugin-typescript2';
 import packageJSON from './package.json';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-// @ts-ignore
-// import { uglify } from 'rollup-plugin-uglify';
-// @ts-ignore
-// import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 
 const outConfig = {
   sourcemap: true,
@@ -17,10 +14,11 @@ const outConfig = {
     'react/jsx-runtime': 'jsxRuntime',
   },
 };
+
 export default {
   input: 'src/index.ts',
   plugins: [
-    // sizeSnapshot(),
+    sizeSnapshot(),
     terser(),
     resolve(),
     commonjs(),
@@ -39,7 +37,7 @@ export default {
     },
     {
       file: 'lib/esm/index.js', // 通用模块
-      format: 'es',
+      format: 'esm',
       ...outConfig,
     },
     {

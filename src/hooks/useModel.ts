@@ -8,7 +8,6 @@ import Observer from '../helpers/observer';
 export default <T extends ModelObj, P>(
   observer: Observer<T>,
   Provider: FC<{ init?: P }>,
-  name: string,
 ) => {
   const Model = () => {
     const update = useUpdate();
@@ -44,7 +43,7 @@ export default <T extends ModelObj, P>(
     }, [update]);
     if (!Object.keys(current).length) {
       console.warn(
-        `${name} Initialization failed due to loop nesting or parent call subset`,
+        `Initialization failed due to loop nesting or parent call subset`,
       );
     }
     return current;

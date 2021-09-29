@@ -1,8 +1,10 @@
+import { FC } from 'react';
 import { ModelObj } from '../core';
 import { uuid } from './utils';
 export default class Observer<T extends ModelObj> {
   subs: { [key: string]: (state: T) => void } = {};
   state: T | undefined;
+  provider?: FC<any>;
   setState = (state: T | undefined) => {
     this.state = state;
   };

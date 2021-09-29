@@ -15,15 +15,11 @@ const CreateModel = <P, T extends ModelObj>(
   useHook: (init?: P) => T,
   options?: ModelOptions,
 ) => {
-  const { global } = options || {};
-  const name = useHook.name;
-  if (!rmoxStore[name]) {
-    rmoxStore[name] = new Observer<T>();
+  if (!rmoxStore.get(useHook)) {
+    rmoxStore.set(useHook, new Observer<T>());
   }
-  const observer = rmoxStore[name];
-  const existProvider = rmox.globalModel.find(
-    ({ name }) => name === useHook.name,
-  )?.provider;
+  const observer = rmoxStore.get(useHook)!!;
+  const existProvider = rmox.globalModel.get(useHook);
   const Provider: FC<{ init?: P }> = ({ init, children, ...props }) => {
     const store = useHook(init);
     const { state } = observer;
@@ -45,11 +41,11 @@ const CreateModel = <P, T extends ModelObj>(
     return render;
   };
   const provider = memo(Provider);
-  if (global && !existProvider) {
-    rmox.globalModel.unshift({ provider, name });
+  if (options?.global && !existProvider) {
+    rmox.globalModel.set(useHook, provider);
     rmox.observer.dispatch({});
   }
-  return useModel<T, P>(observer, existProvider || provider, name);
+  return useModel<T, P>(observer, existProvider || provider);
 };
 
 export { CreateModel };

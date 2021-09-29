@@ -66,7 +66,9 @@ const useUserModel = () => {
   const addAge = () => setAge((age) => age + 1);
   return { addAge, age };
 };
-export default createModel(useUserModel, { global: true });
+export default createModel(useUserModel, {
+  global: true,
+});
 ```
 
 ### 组件内使用 modelHook
@@ -189,7 +191,9 @@ const useMoneyModel = () => {
   const addMoney = () => setMoney((money) => money + 1);
   return { addMoney, money, addAge };
 };
-export default createModel(useMoneyModel, true);
+export default createModel(useMoneyModel, {
+  global: true,
+});
 ```
 
 ## 在任意位置获取`model`内容以及修改`store`
@@ -212,10 +216,10 @@ useUserModel.dispatch({ ...useUserModel.getData(), count: 10 });
 
 ## createModel(创建 model)
 
-| 参数    | 描述               | 默认  | 必填 |
-| ------- | ------------------ | ----- | ---- |
-| useHook | 具体的 `modelHook` | --    | 是   |
-| global  | 是否是全局         | false | 否   |
+| 参数    | 描述               | 默认 | 必填 |
+| ------- | ------------------ | ---- | ---- |
+| useHook | 具体的 `modelHook` | --   | 是   |
+| options | 配置 ·· `global`   |      | 否   |
 
 ## GlobalProvider(全局提供者)
 
