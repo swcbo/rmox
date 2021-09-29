@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
-import Rmox from '../core/rmox';
-const rmox = Rmox.getInstance();
+import React, { FC, useEffect, useMemo, useState } from 'react'
+import Rmox from '../core/rmox'
+const rmox = Rmox.getInstance()
 const Wrapper = () => {
-  const [models, setModels] = useState(rmox.globalModel);
+  const [models, setModels] = useState(rmox.globalModel)
   useEffect(() => {
     rmox.observer.subscribe(() => {
-      setModels(rmox.globalModel);
-    });
-  }, []);
+      setModels(rmox.globalModel)
+    })
+  }, [])
   return useMemo(
     () =>
       [...models.values()].reduce(
@@ -20,15 +20,15 @@ const Wrapper = () => {
         <></>,
       ),
     [models],
-  );
-};
+  )
+}
 const GlobalProvider: FC = ({ children }) => {
   return (
     <>
       <Wrapper />
       {children}
     </>
-  );
-};
+  )
+}
 
-export default GlobalProvider;
+export default GlobalProvider

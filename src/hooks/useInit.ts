@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 const useInit = (fun: () => void) => {
-  const isInit = useRef(true);
+  const isInit = useRef(true)
   if (isInit.current) {
-    fun();
+    fun()
   }
   useEffect(() => {
-    isInit.current = false;
-  }, []);
-  return isInit;
-};
+    isInit.current = false
+  }, [])
+  return isInit
+}
 
-export default useInit;
+export default useInit
