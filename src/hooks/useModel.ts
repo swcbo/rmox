@@ -5,9 +5,9 @@ import useInit from './useInit'
 import { ModelObj } from '../core/index'
 import Observer from '../helpers/observer'
 
-export default <T extends ModelObj, P>(
+export default <T extends ModelObj>(
   observer: Observer<T>,
-  Provider: FC<{ init?: P }>,
+  Provider: FC<{ init?: unknown }>,
 ) => {
   const Model = () => {
     const update = useUpdate()

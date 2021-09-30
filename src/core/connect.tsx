@@ -1,24 +1,30 @@
-import React, { FunctionComponent } from 'react'
-const Connect = (models: any | any[], mapModelToProps: any) => {
-  return function (Component: React.ComponentClass<any, any>) {
-    const Wrapper: FunctionComponent<any> = p => {
-      let modelProps: any = {}
+import React, { ComponentType, Component, FC } from 'react'
+import { TUseHook } from './index'
+type ModelToProps<T, P> = (model: P) => T
+export default function connect<T>(
+  models: TUseHook<unknown> | TUseHook<any>[],
+  mTp: ModelToProps<T, any>,
+) {
+  return (C: ComponentType) => {
+    const Wrapper: FC<any> = (p: any) => {
+      let mP
       if (models instanceof Array) {
-        modelProps = mapModelToProps(
-          models.reduce((pre, now) => [...pre, now()], []),
-          p,
-        )
+        // @ts-ignore
+        mP = mTp(models.reduce((pre, now) => [...pre, now({})], []))
       } else {
         const store = models()
-        modelProps = mapModelToProps(store, p)
+        mP = mTp(store)
       }
       const props = {
         ...p,
-        ...modelProps,
+        ...mP,
       }
-      return <Component {...props} />
+      return <C {...props} />
     }
-    return Wrapper
+    return class C extends Component {
+      render() {
+        return <Wrapper />
+      }
+    }
   }
 }
-export default Connect

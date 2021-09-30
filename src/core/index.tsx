@@ -6,13 +6,15 @@ import Rmox from './rmox'
 const rmox = Rmox.getInstance()
 const rmoxStore = rmox.store
 
-export type ModelObj = { [key: string]: any }
-export type TUseHook = <T, P>(init?: P) => T
+export type ModelObj = Record<string, unknown>
+export interface TUseHook<T> {
+  (init?: any): T
+}
 export type ModelOptions = {
   global?: boolean // 是否是全局
 }
-const CreateModel = <P, T extends ModelObj>(
-  useHook: (init?: P) => T,
+const CreateModel = <T extends ModelObj>(
+  useHook: TUseHook<T>,
   options?: ModelOptions,
 ) => {
   if (!rmoxStore.get(useHook)) {
@@ -20,7 +22,7 @@ const CreateModel = <P, T extends ModelObj>(
   }
   const observer = rmoxStore.get(useHook)!!
   const existProvider = rmox.globalModel.get(useHook)
-  const Provider: FC<{ init?: P }> = ({ init, children, ...props }) => {
+  const Provider: FC<{ init?: unknown }> = ({ init, children, ...props }) => {
     const store = useHook(init)
     const { state } = observer
     !state && observer.setState(store)
@@ -45,7 +47,7 @@ const CreateModel = <P, T extends ModelObj>(
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})
   }
-  return useModel<T, P>(observer, existProvider || provider)
+  return useModel<T>(observer, existProvider || provider)
 }
 
 export { CreateModel }
