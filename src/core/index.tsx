@@ -6,7 +6,7 @@ import Rmox from './rmox'
 const rmox = Rmox.getInstance()
 const rmoxStore = rmox.store
 
-export type ModelObj = Record<string, unknown>
+export type ModelObj = Record<string, any>
 export interface TUseHook<T> {
   (init?: any): T
 }
