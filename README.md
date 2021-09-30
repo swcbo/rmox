@@ -20,11 +20,11 @@
 - render 优化(只有绑定的数据改变才会触发 render)
 - 支持 全局 model 以及局部 model
 
-# 在线预览
+## 在线预览
 
 [![Edit](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/heuristic-hill-356xk)
 
-# 安装
+## 安装
 
 ```bash
 yarn add rmox
@@ -41,11 +41,11 @@ npm install --save rmox
 > 由于 rmox 全局 model 都是挂载在 App 之上所以需要配置 GlobalProvider `只有需要使用全局model的情况下才需要配置`
 
 ```tsx
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import { GlobalProvider } from 'rmox';
-import App from './App';
-const rootElement = document.getElementById('root');
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom'
+import { GlobalProvider } from 'rmox'
+import App from './App'
+const rootElement = document.getElementById('root')
 ReactDOM.render(
   <StrictMode>
     <GlobalProvider>
@@ -53,7 +53,7 @@ ReactDOM.render(
     </GlobalProvider>
   </StrictMode>,
   rootElement,
-);
+)
 ```
 
 ### 创建 modelHook
@@ -62,13 +62,13 @@ ReactDOM.render(
 
 ```tsx
 const useUserModel = () => {
-  const [age, setAge] = useState(0);
-  const addAge = () => setAge((age) => age + 1);
-  return { addAge, age };
-};
+  const [age, setAge] = useState(0)
+  const addAge = () => setAge(age => age + 1)
+  return { addAge, age }
+}
 export default createModel(useUserModel, {
   global: true,
-});
+})
 ```
 
 ### 组件内使用 modelHook
@@ -76,16 +76,16 @@ export default createModel(useUserModel, {
 > 在任何组件中直接调用 `modelHook` ，可以直接获取 model 内容。
 
 ```tsx
-import useUserModel from '../models/useUserModel';
+import useUserModel from '../models/useUserModel'
 const App = () => {
-  const { age, addAge } = useUserModel();
+  const { age, addAge } = useUserModel()
   return (
     <>
       <button onClick={addAge}>+</button>
       {age}
     </>
-  );
-};
+  )
+}
 ```
 
 ## 局部(模块) model
@@ -95,19 +95,19 @@ const App = () => {
 > 通过`createModel`创建一个 `modelHook `
 
 ```tsx
-import { useState } from 'react';
-import { createModel } from 'rmox';
+import { useState } from 'react'
+import { createModel } from 'rmox'
 const useCounterModel = () => {
-  const [count, setCount] = useState(0);
-  const del = () => setCount(count - 1);
-  const add = () => setCount(count + 1);
+  const [count, setCount] = useState(0)
+  const del = () => setCount(count - 1)
+  const add = () => setCount(count + 1)
   return {
     count,
     add,
     del,
-  };
-};
-export default createModel(useCounterModel);
+  }
+}
+export default createModel(useCounterModel)
 ```
 
 > 由于 rmox 局部 model 需要一个挂载点,使用需要给局部块添加`Provier`
@@ -141,80 +141,115 @@ export default App;
 > 直接在需要使用`modelHook`内容的的位置使用`useCounterModel`订阅`count被修改时会同步更新,只有modelHook内部中当前使用到的数据改变,才会触发当前组件render`
 
 ```tsx
-import React from 'react';
-import useCounterModel from '../../models/useCounterModel';
+import React from 'react'
+import useCounterModel from '../../models/useCounterModel'
 const Count = () => {
-  const { count } = useCounterModel();
+  const { count } = useCounterModel()
   return (
     <>
       <div>Count：{count}</div>
     </>
-  );
-};
-export default Count;
+  )
+}
+export default Count
 ```
 
 ### 调用 model 方法
 
->
-
 ```tsx
-import React from 'react';
-import useCounterModel from '../../models/useCounterModel';
+import React from 'react'
+import useCounterModel from '../../models/useCounterModel'
 
 const Counter = () => {
-  const { del, add } = useCounterModel();
+  const { del, add } = useCounterModel()
   return (
     <>
       <button onClick={add}>+</button>
       <button onClick={del}>-</button>
     </>
-  );
-};
-export default Counter;
+  )
+}
+export default Counter
+```
+
+### 在类组件中调用
+
+> 支持用注解绑定(可以绑定多个也可以绑定一个)
+
+```tsx
+@connect([useMoneyModel, useUserModel], ([money, user]) => ({
+  age: user.age,
+  money: money.money,
+}))
+export default class Test extends React.Component {
+  render() {
+    const { age, money } = this.props
+    return (
+      <>
+        {money} / {age}
+      </>
+    )
+  }
+}
+```
+
+```tsx
+import React from 'react'
+import useCounterModel from '../../models/useCounterModel'
+
+const Counter = () => {
+  const { del, add } = useCounterModel()
+  return (
+    <>
+      <button onClick={add}>+</button>
+      <button onClick={del}>-</button>
+    </>
+  )
+}
+export default Counter
 ```
 
 # 更多用法
 
-## modelHook 依赖调用
+### modelHook 依赖调用
 
 > `rmox`支持模块之间的相互依赖
 
 ```tsx
-import { useState } from 'react';
-import { createModel } from 'rmox';
-import useUserModel from './useUserModel';
+import { useState } from 'react'
+import { createModel } from 'rmox'
+import useUserModel from './useUserModel'
 
 const useMoneyModel = () => {
-  const [money, setMoney] = useState(100);
-  const { addAge } = useUserModel();
-  const addMoney = () => setMoney((money) => money + 1);
-  return { addMoney, money, addAge };
-};
+  const [money, setMoney] = useState(100)
+  const { addAge } = useUserModel()
+  const addMoney = () => setMoney(money => money + 1)
+  return { addMoney, money, addAge }
+}
 export default createModel(useMoneyModel, {
   global: true,
-});
+})
 ```
 
-## 在任意位置获取`model`内容以及修改`store`
+### 在任意位置获取`model`内容以及修改`store`
 
 > 在实际过程中可能在不是组件的环境中需要获取到`modelHook`内容,`rmox`给 model 对象上附带对应的属性犯法
 
 ```tsx
-import useUserModel from './useUserModel';
+import useUserModel from './useUserModel'
 // model内容
-const counterState = useUserModel.getData();
+const counterState = useUserModel.getData()
 // 直接修改内容
-useUserModel.dispatch({ ...useUserModel.getData(), count: 10 });
+useUserModel.dispatch({ ...useUserModel.getData(), count: 10 })
 ```
 
 # 注意
 
 > 依赖必须为单向流,`禁止循环嵌套`,且全局与局部 model 之间`不允许全局依赖局部model`
 
-# API 介绍
+## API 介绍
 
-## createModel(创建 model)
+### createModel(创建 model)
 
 | 参数    | 描述               | 默认 | 必填 |
 | ------- | ------------------ | ---- | ---- |
