@@ -8,7 +8,6 @@ import connect from '../../../../src/core/connect'
 }))
 export default class Test extends React.Component<any, any> {
   render() {
-    console.log('>_____')
     const { age, money } = this.props
     return (
       <>

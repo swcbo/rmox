@@ -5,7 +5,7 @@
 </p>
 <br/>
 <p align="center">
- <a href="https://travis-ci.com/q1104133609/rmox"><img src="https://app.travis-ci.com/q1104133609/rmox.svg?branch=main" alt="npm package"></a>
+ <a href="https://travis-ci.com/swcbo/rmox"><img src="https://app.travis-ci.com/swcbo/rmox.svg?branch=main" alt="npm package"></a>
   <a href="https://npmjs.com/package/rmox"><img src="https://img.shields.io/npm/v/rmox.svg?logo=npm" alt="npm package"></a>
   <a href="https://bundlephobia.com/package/rmox@latest"><img src="https://img.shields.io/bundlephobia/min/rmox.svg?logo=typescript" alt="size"></a>
   <img src="https://img.shields.io/npm/dependency-version/rmox/peer/react?logo=react" alt="react version">

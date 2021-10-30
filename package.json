@@ -16,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/q1104133609/rmox.git"
+    "url": "git+https://github.com/swcbo/rmox.git"
   },
   "bugs": {
-    "url": "https://github.com/q1104133609/rmox/issues"
+    "url": "https://github.com/swcbo/rmox/issues"
   },
   "keywords": [
     "rmox",
