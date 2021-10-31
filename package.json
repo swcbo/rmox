@@ -52,8 +52,5 @@
   "peerDependencies": {
     "react": ">=16.8.0"
   },
-  "resolutions": {
-    "tslib": "2.3.1"
-  },
   "dependencies": {}
 }
