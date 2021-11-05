@@ -1,13 +1,30 @@
 import React from 'react'
 import useMoneyModel from '../../models/useMoneyModel'
-import connect from '../../../../src/core/connect'
+import connect, { FinalProps } from '../../../../src/core/connect'
 
-@connect([useMoneyModel], ([money]) => () => ({
+// typescript is not good for support Decorator 
+// @connect(useMoneyModel, ([money]) => ({
+//   money: money.money,
+// }))
+// class Test extends React.Component {
+//     render() {
+//       const { money } = this.props
+//       return <>{money}</>
+//     }
+//   }
+// );
+
+
+export default connect(useMoneyModel, ([money]) => ({
   money: money.money,
-}))
-export default class Test extends React.Component {
-  render() {
-    const { money } = this.props
-    return <>{money}</>
-  }
-}
+}))(
+  class Test extends React.Component<
+    FinalProps<[typeof useMoneyModel], {}, 'money'>
+  > {
+    render() {
+      const { money } = this.props
+      return <>{money}</>
+    }
+  },
+)
+

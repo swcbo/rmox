@@ -5,21 +5,35 @@ import connect, { FinalProps } from '../../../../src/core/connect'
 
 const Models = [useMoneyModel, useUserModel] as const;
 
-@connect<typeof Models, {}>(
-  [useMoneyModel, useUserModel],
-  ([money, user]) =>
-    props => ({
-      age: user.age,
-      money: money.money,
-    }),
+type C = FinalProps<typeof Models, {}, 'age' | 'money'>;
+// typescript is not good for support Decorator 
+// @connect(Models, ([money, user]) => props => ({
+//   age: user.age,
+//   money: money.money,
+// }))
+// class Test extends React.Component {
+//   render() {
+//     const { age, money } = this.props
+//     return (
+//       <>
+//         {money} / {age}
+//       </>
+//     )
+//   }
+// }
+
+connect(Models, ([money, user], props) => ({
+  age: user.age,
+  money: money.money,
+}))(
+  class Test extends React.Component<C> {
+    render() {
+      const { age, money } = this.props
+      return (
+        <>
+          {money} / {age}
+        </>
+      )
+    }
+  },
 )
-export default class Test extends React.Component<any> {
-  render() {
-    const { age, money } = this.props
-    return (
-      <>
-        {money} / {age}
-      </>
-    )
-  }
-}
