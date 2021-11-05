@@ -3,13 +3,13 @@
  * @version:
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
- * @LastEditors: 小白
- * @LastEditTime: 2021-09-26 20:54:36
+ * @LastEditors: jackQ
+ * @LastEditTime: 2021-11-02 17:48:55
  */
 import React, { useState, lazy, Suspense } from 'react';
 import Counter from './components/Counter';
 import Count from './components/Counter/count';
-import Test from './components/Test';
+import Test from './components/Test/mulitipeModel'
 import './index.css';
 import useCounterModel from './models/useCounterModel';
 import useUserModel from './models/useUserModel';
