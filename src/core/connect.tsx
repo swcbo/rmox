@@ -1,12 +1,8 @@
+/* eslint-disable no-extra-semi */
 import { Component } from 'react'
-import type { ComponentType, FC } from 'react';
-import type {
-  ExecutedRes,
-  ModelType,
-  Model,
-  ComponentProps,
-} from 'src/typing'
-import type { TransForm, FinalProps } from 'src/typing/connect';
+import type { ComponentType, FC } from 'react'
+import type { ExecutedRes, ModelType, Model, ComponentProps } from '../typing'
+import type { TransForm, FinalProps } from '../typing/connect'
 
 function connect<T extends ModelType, P extends ComponentProps, K = string>(
   models: T,
@@ -18,21 +14,17 @@ function connect<T extends ModelType, P extends ComponentProps, K = string>(
     }
     return class D extends Component<any> {
       render() {
-        const transform = Array.isArray(models) ? models : [models];
-        const _props = this.props;
-        const next = [] as unknown as ExecutedRes<T extends Model ? [T] : T>;
+        const transform = Array.isArray(models) ? models : [models]
+        const _props = this.props
+        const next = [] as unknown as ExecutedRes<T extends Model ? [T] : T>
         transform.forEach(i => {
-          (next as any).push(i())
-        });
-        const props = mergeToProps(next, _props as P);
-        return (
-          <Wrapper
-            {...(props)}
-          />
-        )
+          ;(next as any).push(i())
+        })
+        const props = mergeToProps(next, _props as P)
+        return <Wrapper {...props} />
       }
     }
   }
 }
 
-export default connect;
+export default connect

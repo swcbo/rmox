@@ -3,7 +3,7 @@ import useInit from '../hooks/useInit'
 import Observer from '../helpers/observer'
 import useModel from '../hooks/useModel'
 import Rmox from './rmox'
-import type { ModelObj, TUseHook, ModelOptions } from 'src/typing'
+import type { ModelObj, TUseHook, ModelOptions } from '../typing'
 const rmox = Rmox.getInstance()
 const rmoxStore = rmox.store
 

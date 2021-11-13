@@ -1,4 +1,4 @@
-import type { ModelObj } from 'src/typing';
+import type { ModelObj } from '../typing'
 
 export const uuid = () => {
   const tempUrl = URL.createObjectURL(new Blob())

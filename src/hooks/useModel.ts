@@ -1,9 +1,9 @@
-import { useRef, useEffect, FC } from 'react';
-import { isEqual, pickStore } from '../helpers/utils';
-import useUpdate from './useUpdate';
-import useInit from './useInit';
-import Observer from '../helpers/observer';
-import type { ModelObj } from 'src/typing'
+import { useRef, useEffect, FC } from 'react'
+import { isEqual, pickStore } from '../helpers/utils'
+import useUpdate from './useUpdate'
+import useInit from './useInit'
+import Observer from '../helpers/observer'
+import type { ModelObj } from '../typing'
 
 export default <T extends ModelObj>(
   observer: Observer<T>,
