@@ -1,8 +1,9 @@
 import React from 'react'
+import { connect } from '../../../../src'
+import { FinalProps } from '../../../../src/typing/connect'
 import useMoneyModel from '../../models/useMoneyModel'
-import connect, { FinalProps } from '../../../../src/core/connect'
 
-// typescript is not good for support Decorator 
+// typescript is not good for support Decorator
 // @connect(useMoneyModel, ([money]) => ({
 //   money: money.money,
 // }))
@@ -13,7 +14,6 @@ import connect, { FinalProps } from '../../../../src/core/connect'
 //     }
 //   }
 // );
-
 
 export default connect(useMoneyModel, ([money]) => ({
   money: money.money,
@@ -27,4 +27,3 @@ export default connect(useMoneyModel, ([money]) => ({
     }
   },
 )
-

@@ -1,34 +1,26 @@
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import Rmox from '../core/rmox'
+import useUpdate from '../hooks/useUpdate'
 const rmox = Rmox.getInstance()
-const Wrapper = () => {
-  const [models, setModels] = useState(rmox.globalModel)
+const Wrapper: FC = () => {
+  const update = useUpdate()
   useEffect(() => {
     rmox.observer.subscribe(() => {
-      setModels(rmox.globalModel)
+      update()
     })
-  }, [])
-  return useMemo(
-    () =>
-      [...models.values()].reduce(
-        (p, C) => (
-          <>
-            <C />
-            {p}
-          </>
-        ),
-        <></>,
-      ),
-    [models],
-  )
-}
-const GlobalProvider: FC = ({ children }) => {
+  }, [update])
   return (
     <>
-      <Wrapper />
-      {children}
+      {[...rmox.globalModel.values()].map((V: FC<any>, index) => (
+        <V key={index} />
+      ))}
     </>
   )
 }
-
+const GlobalProvider: FC = ({ children }) => (
+  <>
+    <Wrapper />
+    {children}
+  </>
+)
 export default GlobalProvider
