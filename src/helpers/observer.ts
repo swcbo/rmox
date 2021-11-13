@@ -1,6 +1,6 @@
-import { FC } from 'react'
-import { ModelObj } from '../core'
-import { uuid } from './utils'
+import { FC } from 'react';
+import { uuid } from './utils';
+import type { ModelObj } from 'src/typing';
 export default class Observer<T extends ModelObj> {
   subs: { [key: string]: (state: T) => void } = {}
   state: T | undefined

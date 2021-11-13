@@ -13,6 +13,7 @@
     "strict": true, // 严格模式
     "noUnusedLocals": false, // 未使用变量报错
     "experimentalDecorators": true, // 启动装饰器
+    "emitDecoratorMetadata": true,
     "resolveJsonModule": true, // 加载json
     "esModuleInterop": true,
     "removeComments": false, // 删除注释

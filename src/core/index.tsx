@@ -3,16 +3,10 @@ import useInit from '../hooks/useInit'
 import Observer from '../helpers/observer'
 import useModel from '../hooks/useModel'
 import Rmox from './rmox'
+import type { ModelObj, TUseHook, ModelOptions } from 'src/typing'
 const rmox = Rmox.getInstance()
 const rmoxStore = rmox.store
 
-export type ModelObj = Record<string, any>
-export interface TUseHook<T> {
-  (init?: any): T
-}
-export type ModelOptions = {
-  global?: boolean // 是否是全局
-}
 const CreateModel = <T extends ModelObj>(
   useHook: TUseHook<T>,
   options?: ModelOptions,
