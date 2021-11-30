@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
-import useCounterModel from '../../models/useCounterModel';
-import Test from './test';
+import React, { memo } from 'react'
+import useCounterModel from '../../models/useCounterModel'
+import Test from './test'
 
 /*
  * @Descripttion:
@@ -8,17 +8,17 @@ import Test from './test';
  * @Author: 小白
  * @Date: 2021-09-18 22:31:33
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-22 19:18:19
+ * @LastEditTime: 2021-11-29 22:54:03
  */
 const Counter = () => {
-  const { del, add } = useCounterModel();
-  console.log('Counter render');
+  const { del, add, setTest } = useCounterModel()
+  console.log('Counter render')
   return (
     <>
       <button onClick={add}>+</button>
       <button onClick={del}>-</button>
-      <Test />
+      <button onClick={() => setTest(d => d + 1)}>?</button>
     </>
-  );
-};
-export default memo(Counter);
+  )
+}
+export default memo(Counter)

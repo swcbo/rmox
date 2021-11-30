@@ -1,17 +1,20 @@
-import { useRef, useEffect, FC } from 'react'
-import { isEqual, pickStore } from '../helpers/utils'
-import useUpdate from './useUpdate'
-import useInit from './useInit'
+import { FC, MutableRefObject, useContext, useEffect, useRef } from 'react'
+import { RmoxContext } from '../core'
 import Observer from '../helpers/observer'
+import { isEqual, pickStore } from '../helpers/utils'
 import type { ModelObj } from '../typing'
-
+import useInit from './useInit'
+import useUpdate from './useUpdate'
 export default <T extends ModelObj>(
-  observer: Observer<T>,
   Provider: FC<{ init?: unknown }>,
+  observer?: Observer<T>,
 ) => {
   const Model = () => {
+    const data =
+      useContext<{ observer: MutableRefObject<Observer<T>> }>(RmoxContext)
+    const obRef = useRef<Observer<T>>(observer || data?.observer?.current)
     const update = useUpdate()
-    const store = useRef<T>({ ...observer.state } as T)
+    const store = useRef<T>({ ...obRef.current?.state } as T)
     const depsFn = useRef<string[]>([])
     let current = store.current
     useInit(() => {
@@ -27,9 +30,8 @@ export default <T extends ModelObj>(
         })
       })
     })
-
     useEffect(() => {
-      return observer.subscribe((nextState: T) => {
+      return obRef.current?.subscribe((nextState: T) => {
         if (
           !isEqual(
             pickStore(depsFn.current, store.current),
@@ -40,16 +42,14 @@ export default <T extends ModelObj>(
         }
         store.current = nextState
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [update])
-    if (!Object.keys(current).length) {
-      console.warn(
-        `Initialization failed due to loop nesting or parent call subset`,
-      )
-    }
     return current
   }
   Model.Provider = Provider
-  Model.dispatch = observer.dispatch
-  Model.getData = () => observer.state
+  if (observer) {
+    Model.dispatch = observer.dispatch
+    Model.getData = () => observer.state
+  }
   return Model
 }

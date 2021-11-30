@@ -1,12 +1,13 @@
 import React from 'react'
+import { connect } from '../../../../src'
+import { FinalProps } from '../../../../src/typing/connect'
 import useMoneyModel from '../../models/useMoneyModel'
 import useUserModel from '../../models/useUserModel'
-import connect, { FinalProps } from '../../../../src/core/connect'
 
-const Models = [useMoneyModel, useUserModel] as const;
+const Models = [useMoneyModel, useUserModel] as const
 
-type C = FinalProps<typeof Models, {}, 'age' | 'money'>;
-// typescript is not good for support Decorator 
+type C = FinalProps<typeof Models, {}, 'age' | 'money'>
+// typescript is not good for support Decorator
 // @connect(Models, ([money, user]) => props => ({
 //   age: user.age,
 //   money: money.money,
@@ -22,7 +23,7 @@ type C = FinalProps<typeof Models, {}, 'age' | 'money'>;
 //   }
 // }
 
-connect(Models, ([money, user], props) => ({
+export default connect(Models, ([money, user], props) => ({
   age: user.age,
   money: money.money,
 }))(

@@ -1,47 +1,67 @@
-import React, { FC, memo, useEffect, useMemo, cloneElement } from 'react'
-import useInit from '../hooks/useInit'
+import React, {
+  cloneElement,
+  createContext,
+  FC,
+  memo,
+  useEffect,
+  useRef,
+} from 'react'
 import Observer from '../helpers/observer'
+import { uuid } from '../helpers/utils'
+import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
+import type { ModelObj, ModelOptions, TUseHook } from '../typing'
 import Rmox from './rmox'
-import type { ModelObj, TUseHook, ModelOptions } from '../typing'
 const rmox = Rmox.getInstance()
 const rmoxStore = rmox.store
-
+export const RmoxContext = createContext<any>(null)
 const CreateModel = <T extends ModelObj>(
   useHook: TUseHook<T>,
   options?: ModelOptions,
 ) => {
-  if (!rmoxStore.get(useHook)) {
-    rmoxStore.set(useHook, new Observer<T>())
-  }
-  const observer = rmoxStore.get(useHook)!!
-  const existProvider = rmox.globalModel.get(useHook)
-  const Provider: FC<{ init?: unknown }> = ({ init, children, ...props }) => {
-    const store = useHook(init)
-    const { state } = observer
-    !state && observer.setState(store)
-    const isInit = useInit(() => {
-      observer.dispatch(store)
-    })
+  const isGlobal = options?.global
+  const globalObserver = new Observer<T>()
 
+  const Executor = ({ init, observer }: any) => {
+    const store = useHook(init)
+    const obsRef = useRef(observer)
+    const isInit = useInit(() => {
+      obsRef.current.dispatch(store)
+    })
     useEffect(() => {
-      if (!isInit.current) {
-        observer.dispatch(store)
-      }
-      return () => observer.setState(undefined)
+      const obS = obsRef.current
+      !isInit.current && obS.dispatch(store)
+      return () => obS.setState(undefined)
     }, [isInit, store])
-    const render = useMemo(
-      () => <>{cloneElement(<>{children}</>, props)}</>,
-      [children, props],
+    return <></>
+  }
+  const Provider: FC<{ init?: unknown }> = ({ init, children, ...props }) => {
+    const uidRef = useRef(isGlobal ? useHook : uuid())
+    const uid = uidRef.current
+    const rmoxObs = rmoxStore.get(uid)
+    const observer = useRef(
+      isGlobal
+        ? globalObserver
+        : rmoxObs || rmoxStore.set(uid, new Observer<T>()).get(uid),
     )
-    return render
+    const render = (
+      <>
+        <Executor init={init} observer={observer.current} />
+        {cloneElement(<>{children}</>, props)}
+      </>
+    )
+    return isGlobal ? (
+      render
+    ) : (
+      <RmoxContext.Provider value={{ observer }}>{render}</RmoxContext.Provider>
+    )
   }
   const provider = memo(Provider)
-  if (options?.global && !existProvider) {
+  if (isGlobal && !rmox.globalModel.get(useHook)) {
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})
   }
-  return useModel<T>(observer, existProvider || provider)
+  return useModel<T>(provider, isGlobal ? globalObserver : undefined)
 }
 
 export { CreateModel }
