@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { createModel } from '../../../src/index';
-import useUserModel from './useUserModel';
+import { useState } from 'react'
+import { createModel } from '../../../src/index'
+import useUserModel from './useUserModel'
 
 /*
  * @Descripttion:
@@ -8,13 +8,12 @@ import useUserModel from './useUserModel';
  * @Author: 小白
  * @Date: 2021-09-19 16:27:15
  * @LastEditors: 小白
- * @LastEditTime: 2021-09-23 22:18:49
+ * @LastEditTime: 2021-12-07 22:00:57
  */
 const useMoneyModel = () => {
-  const { addAge } = useUserModel();
-  const [money, setMoney] = useState(100);
-  const addMoney = () => setMoney((money) => money + 1);
-  console.log(addAge, 'useMoneyModel');
-  return { addMoney, money, addAge };
-};
-export default createModel(useMoneyModel, { global: true });
+  const { addAge } = useUserModel()
+  const [money, setMoney] = useState(100)
+  const addMoney = () => setMoney(money => money + 1)
+  return { addMoney, money, addAge }
+}
+export default createModel(useMoneyModel, { global: true })

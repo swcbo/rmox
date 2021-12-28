@@ -4,6 +4,7 @@ import React, {
   FC,
   memo,
   useEffect,
+  useMemo,
   useRef,
 } from 'react'
 import Observer from '../helpers/observer'
@@ -11,8 +12,7 @@ import { uuid } from '../helpers/utils'
 import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
 import type { ModelObj, ModelOptions, TUseHook } from '../typing'
-import Rmox from './rmox'
-const rmox = Rmox.getInstance()
+import rmox from './rmox'
 const rmoxStore = rmox.store
 export const RmoxContext = createContext<any>(null)
 const CreateModel = <T extends ModelObj>(
@@ -20,8 +20,11 @@ const CreateModel = <T extends ModelObj>(
   options?: ModelOptions,
 ) => {
   const isGlobal = options?.global
-  const globalObserver = new Observer<T>()
+  if (!rmoxStore.get(useHook)) {
+    rmoxStore.set(useHook, new Observer<T>())
+  }
 
+  const existProvider = rmox.globalModel.get(useHook)
   const Executor = ({ init, observer }: any) => {
     const store = useHook(init)
     const obsRef = useRef(observer)
@@ -41,12 +44,15 @@ const CreateModel = <T extends ModelObj>(
     const rmoxObs = rmoxStore.get(uid)
     const observer = useRef(
       isGlobal
-        ? globalObserver
+        ? rmoxStore.get(useHook)
         : rmoxObs || rmoxStore.set(uid, new Observer<T>()).get(uid),
     )
+    const executor = useMemo(() => {
+      return <Executor init={init} observer={observer.current} />
+    }, [init])
     const render = (
       <>
-        <Executor init={init} observer={observer.current} />
+        {executor}
         {cloneElement(<>{children}</>, props)}
       </>
     )
@@ -61,7 +67,10 @@ const CreateModel = <T extends ModelObj>(
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})
   }
-  return useModel<T>(provider, isGlobal ? globalObserver : undefined)
+  return useModel<T>(
+    existProvider || provider,
+    isGlobal ? rmoxStore.get(useHook) : undefined,
+  )
 }
 
 export { CreateModel }

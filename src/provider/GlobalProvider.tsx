@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react'
-import Rmox from '../core/rmox'
+import rmox from '../core/rmox'
 import useUpdate from '../hooks/useUpdate'
-const rmox = Rmox.getInstance()
 const Wrapper: FC = () => {
   const update = useUpdate()
   useEffect(() => {
