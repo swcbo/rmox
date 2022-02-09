@@ -16,7 +16,7 @@ export default <T extends ModelObj>(
     const update = useUpdate()
     const store = useRef<T>({ ...obRef.current?.state } as T)
     const depsFn = useRef<string[]>([])
-    let current = store.current
+    const current = store.current
     useInit(() => {
       Object.keys(current).forEach(v => {
         const value = current[v]

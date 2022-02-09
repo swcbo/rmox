@@ -1,5 +1,4 @@
 import React, {
-  cloneElement,
   createContext,
   FC,
   memo,
@@ -38,7 +37,7 @@ const CreateModel = <T extends ModelObj>(
     }, [isInit, store])
     return <></>
   }
-  const Provider: FC<{ init?: unknown }> = ({ init, children, ...props }) => {
+  const Provider: FC<{ init?: unknown }> = ({ init, children }) => {
     const uidRef = useRef(isGlobal ? useHook : uuid())
     const uid = uidRef.current
     const rmoxObs = rmoxStore.get(uid)
@@ -53,7 +52,7 @@ const CreateModel = <T extends ModelObj>(
     const render = (
       <>
         {executor}
-        {cloneElement(<>{children}</>, props)}
+        {children}
       </>
     )
     return isGlobal ? (
