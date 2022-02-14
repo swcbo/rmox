@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from 'react'
 import Observer from '../helpers/observer'
-import { uuid } from '../helpers/utils'
+import { isEqual, uuid } from '../helpers/utils'
 import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
 import type { ModelObj, ModelOptions, TUseHook } from '../typing'
@@ -49,6 +49,7 @@ const CreateModel = <T extends ModelObj>(
     const executor = useMemo(() => {
       return <Executor init={init} observer={observer.current} />
     }, [init])
+
     const render = (
       <>
         {executor}
@@ -61,7 +62,8 @@ const CreateModel = <T extends ModelObj>(
       <RmoxContext.Provider value={{ observer }}>{render}</RmoxContext.Provider>
     )
   }
-  const provider = memo(Provider)
+
+  const provider = memo(Provider, isEqual)
   if (isGlobal && !rmox.globalModel.get(useHook)) {
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})

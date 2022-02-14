@@ -1,5 +1,5 @@
 import type { ModelObj } from '../typing'
-
+import fastCompare from 'react-fast-compare'
 export const uuid = () => {
   const tempUrl = URL.createObjectURL(new Blob())
   const uuId = tempUrl.toString()
@@ -22,23 +22,7 @@ export const pick = (obj: ModelObj, arr: string[]) =>
   )
 
 // 判断对象是否相等
-export const isEqual = (old: ModelObj, now: ModelObj) => {
-  if (isFunction(now) || !isObject(old)) {
-    return now === old
-  }
-  if (old === now) {
-    return true
-  }
-  if (!old || !now || Object.keys(old).length !== Object.keys(now).length) {
-    return false
-  }
-  for (let key in old) {
-    if (!isEqual(old[key], now[key])) {
-      return false
-    }
-  }
-  return true
-}
+export const isEqual = (old: ModelObj, now: ModelObj) => fastCompare(old, now)
 
 // 获取store里面指定值
 export const pickStore = <T extends ModelObj>(deps: string[], state: T) =>
