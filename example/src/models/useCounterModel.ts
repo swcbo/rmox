@@ -10,9 +10,9 @@ import { useRef } from 'react'
 import { useCallback, useState } from 'react'
 import { createModel } from '../../../src/index'
 const data = () => 3
-const useCounterModel = (init?: number) => {
+const useCounterModel = (value?: number) => {
   const ces = useRef(data())
-  const [count, setCount] = useState(init || 1)
+  const [count, setCount] = useState(value || 1)
   const [test, setTest] = useState(1)
   const del = useCallback(() => setCount(count => count - 1), [])
   const add = useCallback(() => setCount(count => count - 1), [])

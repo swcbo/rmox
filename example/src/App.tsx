@@ -23,7 +23,7 @@ function App() {
   const [visible, setVisible] = useState(true)
   const bottomView = useMemo(
     () => (
-      <useCounterModel.Provider init={5}>
+      <useCounterModel.Provider value={5}>
         <Counter />
         <Count />
       </useCounterModel.Provider>
@@ -38,7 +38,7 @@ function App() {
       </button>
       <div>测试局部卸载：</div>
       {show && (
-        <useCounterModel.Provider init={4}>
+        <useCounterModel.Provider value={4}>
           <Counter className={visible ? '1' : '2'} />
           <Count />
         </useCounterModel.Provider>

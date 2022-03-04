@@ -1,17 +1,16 @@
-import { FC, MutableRefObject, useContext, useEffect, useRef } from 'react'
-import { RmoxContext } from '../core'
+import { FC, useContext, useEffect, useRef } from 'react'
 import Observer from '../helpers/observer'
 import { isEqual, pickStore } from '../helpers/utils'
-import type { ModelObj } from '../typing'
+import type { IProviderProps, ModelObj, TObserverContext } from '../typing'
 import useInit from './useInit'
 import useUpdate from './useUpdate'
-export default <T extends ModelObj>(
-  Provider: FC<{ init?: unknown }>,
+export default <T extends ModelObj, P>(
+  Provider: FC<IProviderProps<P>>,
+  rmoxContext: TObserverContext<T>,
   observer?: Observer<T>,
 ) => {
   const Model = () => {
-    const data =
-      useContext<{ observer: MutableRefObject<Observer<T>> }>(RmoxContext)
+    const data = useContext(rmoxContext)
     const obRef = useRef<Observer<T>>(observer || data?.observer?.current)
     const update = useUpdate()
     const store = useRef<T>({ ...obRef.current?.state } as T)

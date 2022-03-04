@@ -10,22 +10,33 @@ import Observer from '../helpers/observer'
 import { isEqual, uuid } from '../helpers/utils'
 import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
-import type { ModelObj, ModelOptions, TUseHook } from '../typing'
+import type {
+  IProviderProps,
+  ModelObj,
+  ModelOptions,
+  TUseHook,
+} from '../typing'
 import rmox from './rmox'
 const rmoxStore = rmox.store
-export const RmoxContext = createContext<any>(null)
-const CreateModel = <T extends ModelObj>(
-  useHook: TUseHook<T>,
+
+const CreateModel = <T extends ModelObj, P extends unknown>(
+  useHook: TUseHook<T, P>,
   options?: ModelOptions,
 ) => {
   const isGlobal = options?.global
   if (!rmoxStore.get(useHook)) {
     rmoxStore.set(useHook, new Observer<T>())
   }
-
+  const RmoxContext = createContext<any>(null)
   const existProvider = rmox.globalModel.get(useHook)
-  const Executor = ({ init, observer }: any) => {
-    const store = useHook(init)
+  const Executor = ({
+    value,
+    observer,
+  }: {
+    value?: P
+    observer: Observer<T>
+  }) => {
+    const store = useHook(value)
     const obsRef = useRef(observer)
     const isInit = useInit(() => {
       obsRef.current.dispatch(store)
@@ -37,18 +48,19 @@ const CreateModel = <T extends ModelObj>(
     }, [isInit, store])
     return <></>
   }
-  const Provider: FC<{ init?: unknown }> = ({ init, children }) => {
+  const Provider: FC<IProviderProps<P>> = ({ value, children }) => {
     const uidRef = useRef(isGlobal ? useHook : uuid())
     const uid = uidRef.current
     const rmoxObs = rmoxStore.get(uid)
     const observer = useRef(
-      isGlobal
+      (isGlobal
         ? rmoxStore.get(useHook)
-        : rmoxObs || rmoxStore.set(uid, new Observer<T>()).get(uid),
+        : rmoxObs ||
+          rmoxStore.set(uid, new Observer<T>()).get(uid)) as Observer<T>,
     )
     const executor = useMemo(() => {
-      return <Executor init={init} observer={observer.current} />
-    }, [init])
+      return <Executor value={value} observer={observer.current} />
+    }, [value])
 
     const render = (
       <>
@@ -68,8 +80,9 @@ const CreateModel = <T extends ModelObj>(
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})
   }
-  return useModel<T>(
+  return useModel<T, P>(
     existProvider || provider,
+    RmoxContext,
     isGlobal ? rmoxStore.get(useHook) : undefined,
   )
 }
