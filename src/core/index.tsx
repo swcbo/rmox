@@ -44,7 +44,6 @@ const CreateModel = <T extends ModelObj, P extends unknown>(
     useEffect(() => {
       const obS = obsRef.current
       !isInit.current && obS.dispatch(store)
-      return () => obS.setState(undefined)
     }, [isInit, store])
     return <></>
   }

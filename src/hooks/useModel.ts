@@ -47,7 +47,6 @@ export default <T extends ModelObj, P>(
   }
   Model.Provider = Provider
   if (observer) {
-    Model.dispatch = observer.dispatch
     Model.getData = () => observer.state
   }
   return Model

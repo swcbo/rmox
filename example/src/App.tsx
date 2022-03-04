@@ -3,8 +3,8 @@
  * @version:
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
- * @LastEditors: 小白
- * @LastEditTime: 2022-02-08 11:00:32
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-03-04 22:49:52
  */
 import React, { lazy, Suspense, useState } from 'react'
 import { useMemo } from 'react'
@@ -20,7 +20,7 @@ function App() {
   const [show, setShow] = useState(true)
   const [detail, showDetail] = useState(false)
   const { addAge, age } = useUserModel()
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(1)
   const bottomView = useMemo(
     () => (
       <useCounterModel.Provider value={5}>
@@ -30,16 +30,21 @@ function App() {
     ),
     [],
   )
+  console.log(visible)
 
   return (
     <div className="App" style={{ fontSize: 30 }}>
-      <button onClick={() => setVisible(state => !state)}>
+      <button
+        onClick={() => {
+          useUserModel.getData()?.addAge()
+        }}
+      >
         隐藏第一个数字
       </button>
       <div>测试局部卸载：</div>
       {show && (
-        <useCounterModel.Provider value={4}>
-          <Counter className={visible ? '1' : '2'} />
+        <useCounterModel.Provider value={visible}>
+          <Counter />
           <Count />
         </useCounterModel.Provider>
       )}

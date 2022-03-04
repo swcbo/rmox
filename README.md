@@ -61,8 +61,8 @@ ReactDOM.render(
 > 通过`createModel`创建一个 `modelHook `,第二个参数为 对应配置 `global`为是否为全局
 
 ```tsx
-const useUserModel = () => {
-  const [age, setAge] = useState(0)
+const useUserModel = (age: number) => {
+  const [age, setAge] = useState(age)
   const addAge = () => setAge(age => age + 1)
   return { addAge, age }
 }
@@ -97,8 +97,8 @@ const App = () => {
 ```tsx
 import { useState } from 'react'
 import { createModel } from 'rmox'
-const useCounterModel = () => {
-  const [count, setCount] = useState(0)
+const useCounterModel = init => {
+  const [count, setCount] = useState(init)
   const del = () => setCount(count - 1)
   const add = () => setCount(count + 1)
   return {
@@ -124,7 +124,7 @@ import useCounterModel from "./models/useCounterModel";
 const App = () => {
   return (
     <div className="App" >
-      <useCounterModel.Provider>
+      <useCounterModel.Provider value={10}>
         <Counter />
         <Count />
       </useCounterModel.Provider>
@@ -231,7 +231,7 @@ export default createModel(useMoneyModel, {
 })
 ```
 
-### 在任意位置获取`model`内容以及修改`store`
+### 在任意位置获取`model`内容以及修改`store`(仅支持全局 model)
 
 > 在实际过程中可能在不是组件的环境中需要获取到`modelHook`内容,`rmox`给 model 对象上附带对应的属性犯法
 
@@ -240,7 +240,7 @@ import useUserModel from './useUserModel'
 // model内容
 const counterState = useUserModel.getData()
 // 直接修改内容
-useUserModel.dispatch({ ...useUserModel.getData(), count: 10 })
+useUserModel.getData()?.addAge()
 ```
 
 # 注意
