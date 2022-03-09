@@ -1,4 +1,17 @@
-import type { ComponentProps, ExecutedRes, ModelArray, TupleToObject } from "./index";
+/*
+ * @Author: swcbo
+ * @Date: 2021-11-13 18:21:36
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-03-09 18:20:27
+ * @FilePath: /rmox/src/typing/connect.ts
+ * @Description: 关联组件
+ */
+import type {
+  ComponentProps,
+  ExecutedRes,
+  ModelArray,
+  TupleToObject,
+} from './index'
 
 // 合并 元组结构 和 Props
 type MergeModelAndProps<
@@ -6,7 +19,7 @@ type MergeModelAndProps<
   P extends ComponentProps,
 > = TupleToObject<ExecutedRes<T>> & P
 // 获取有效的 key 值
-type PickVaildKey<T extends ModelArray, P extends ComponentProps, K> = Extract<
+type PickValidKey<T extends ModelArray, P extends ComponentProps, K> = Extract<
   K,
   keyof MergeModelAndProps<T, P>
 >
@@ -15,9 +28,13 @@ export type FinalProps<
   T extends ModelArray,
   P extends ComponentProps,
   K = string,
-> = Pick<MergeModelAndProps<T, P>, PickVaildKey<T, P, K>>
+> = Pick<MergeModelAndProps<T, P>, PickValidKey<T, P, K>>
 // 返回值定义
-export type TransForm<T extends ModelArray, P extends ComponentProps, K = string> = (
+export type TransForm<
+  T extends ModelArray,
+  P extends ComponentProps,
+  K = string,
+> = (
   model: ExecutedRes<T>,
   prop: P,
-) => Pick<MergeModelAndProps<T, P>, PickVaildKey<T, P, K>>
+) => Pick<MergeModelAndProps<T, P>, PickValidKey<T, P, K>>

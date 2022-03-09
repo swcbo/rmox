@@ -1,3 +1,11 @@
+/*
+ * @Author: swcbo
+ * @Date: 2022-03-04 22:14:00
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-03-09 18:19:48
+ * @FilePath: /rmox/src/helpers/utils.ts
+ * @Description: 工具函数
+ */
 import type { ModelObj } from '../typing'
 import fastCompare from 'react-fast-compare'
 export const uuid = () => {
@@ -5,14 +13,6 @@ export const uuid = () => {
   const uuId = tempUrl.toString()
   URL.revokeObjectURL(tempUrl)
   return uuId.substr(uuId.lastIndexOf('/') + 1)
-}
-// 是否是对象
-const isObject = (obj: any) => {
-  return typeof obj === 'object' && obj !== null
-}
-// 是否是方法
-const isFunction = (obj: any) => {
-  return typeof obj === 'function' && obj !== null
 }
 // 获取对象里面的指定值
 export const pick = (obj: ModelObj, arr: string[]) =>

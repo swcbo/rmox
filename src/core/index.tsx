@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-09 18:11:46
+ * @LastEditTime: 2022-03-09 18:15:53
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -83,6 +83,7 @@ const CreateModel = <T extends ModelObj, P extends unknown>(
   }
 
   const provider = memo(Provider, isEqual)
+  // 如果为全局model并且不存在就添加到全局集合(防止全局多次注册)
   if (isGlobal && !rmox.globalModel.get(useHook)) {
     rmox.globalModel.set(useHook, provider)
     rmox.observer.dispatch({})
