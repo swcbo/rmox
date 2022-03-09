@@ -1,3 +1,11 @@
+/*
+ * @Author: swcbo
+ * @Date: 2022-03-04 22:14:00
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-03-09 18:11:46
+ * @FilePath: /rmox/src/core/index.tsx
+ * @Description: 核心模块
+ */
 import React, {
   createContext,
   FC,
@@ -33,7 +41,7 @@ const CreateModel = <T extends ModelObj, P extends unknown>(
     value,
     observer,
   }: {
-    value?: P
+    value: P
     observer: Observer<T>
   }) => {
     const store = useHook(value)

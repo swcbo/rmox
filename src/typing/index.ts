@@ -1,15 +1,23 @@
+/*
+ * @Author: swcbo
+ * @Date: 2022-03-04 22:14:00
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-03-09 18:10:57
+ * @FilePath: /rmox/src/typing/index.ts
+ * @Description: 数据类型
+ */
 import { Context, MutableRefObject } from 'react'
 import Observer from 'src/helpers/observer'
 
 export interface TUseHook<T, P> {
-  (value?: P): T
+  (value: P): T
 }
 
 export type TObserverContext<T> = Context<{
   observer: MutableRefObject<Observer<T>>
 }>
 export interface IProviderProps<T> {
-  value?: T
+  value: T
 }
 
 export type ModelOptions = {
