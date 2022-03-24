@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-09 18:15:53
+ * @LastEditTime: 2022-03-24 20:55:14
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -27,7 +27,7 @@ import type {
 import rmox from './rmox'
 const rmoxStore = rmox.store
 
-const CreateModel = <T extends ModelObj, P extends unknown>(
+const CreateModel = <T extends ModelObj, P>(
   useHook: TUseHook<T, P>,
   options?: ModelOptions,
 ) => {
@@ -55,7 +55,8 @@ const CreateModel = <T extends ModelObj, P extends unknown>(
     }, [isInit, store])
     return <></>
   }
-  const Provider: FC<IProviderProps<P>> = ({ value, children }) => {
+  const Provider: FC<IProviderProps<P>> = props => {
+    const { value, children } = props as any
     const uidRef = useRef(isGlobal ? useHook : uuid())
     const uid = uidRef.current
     const rmoxObs = rmoxStore.get(uid)

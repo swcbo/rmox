@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-24 20:38:36
+ * @LastEditTime: 2022-03-24 20:49:18
  * @FilePath: /rmox/src/typing/index.ts
  * @Description: 数据类型
  */

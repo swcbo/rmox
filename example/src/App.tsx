@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-24 20:39:48
+ * @LastEditTime: 2022-03-24 20:56:06
  */
 import React, { lazy, Suspense, useMemo, useState } from 'react'
 import Counter from './components/Counter'
@@ -25,7 +25,7 @@ function App() {
   const [visible, setVisible] = useState(1)
   const bottomView = useMemo(
     () => (
-      <useCounterModel.Provider>
+      <useCounterModel.Provider value="1">
         <Counter />
         <Count />
       </useCounterModel.Provider>

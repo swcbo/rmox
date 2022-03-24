@@ -9,14 +9,11 @@ import { useRef } from 'react'
  */
 import { useCallback, useState } from 'react'
 import { createModel } from '../../../src/index'
-import { useCounterModel } from './useCounterModel'
 const useCounterBModel = (value: number) => {
-  const { add, del, count } = useCounterModel()
-  // const [count, setCount] = useState(CustomCount)
-  // const [test, setTest] = useState(1)
-  //   const del = useCallback(() => setCount(count => count - 1), [])
-  //   const add = useCallback(() => setCount(count => count - 1), [])
-  console.log('>>>>', 'useCounterBModel', count)
+  const [count, setCount] = useState(value)
+  const [test, setTest] = useState(1)
+  const del = useCallback(() => setCount(count => count - 1), [])
+  const add = useCallback(() => setCount(count => count - 1), [])
   return {
     count,
     add,

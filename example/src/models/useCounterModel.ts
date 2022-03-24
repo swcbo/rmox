@@ -5,12 +5,12 @@ import { useRef } from 'react'
  * @Author: 小白
  * @Date: 2021-09-18 22:27:18
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-24 20:26:23
+ * @LastEditTime: 2022-03-24 20:59:04
  */
 import { useCallback, useState } from 'react'
 import { createModel } from '../../../src/index'
 const data = () => 3
-export const useCounterModel = () => {
+const useCounterModel = (value: string) => {
   const ces = useRef(data())
   const [count, setCount] = useState(1)
   const [test, setTest] = useState(1)
