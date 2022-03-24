@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-09 18:10:57
+ * @LastEditTime: 2022-03-24 20:38:36
  * @FilePath: /rmox/src/typing/index.ts
  * @Description: 数据类型
  */
@@ -16,10 +16,7 @@ export interface TUseHook<T, P> {
 export type TObserverContext<T> = Context<{
   observer: MutableRefObject<Observer<T>>
 }>
-export interface IProviderProps<T> {
-  value: T
-}
-
+export type IProviderProps<T> = unknown extends T ? {} : { value: T }
 export type ModelOptions = {
   global?: boolean // 是否是全局
 }

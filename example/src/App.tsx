@@ -4,17 +4,15 @@
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-06 15:02:58
+ * @LastEditTime: 2022-03-24 20:39:48
  */
-import React, { lazy, Suspense, useState } from 'react'
-import { useMemo } from 'react'
+import React, { lazy, Suspense, useMemo, useState } from 'react'
 import Counter from './components/Counter'
 import Count from './components/Counter/count'
 import './index.css'
 import useCounterBModel from './models/useCounterBModel'
 // import Test from './components/Test/singleModel'
 import useCounterModel from './models/useCounterModel'
-import useMoneyModel from './models/useMoneyModel'
 import useTestModel from './models/useTestModel'
 import useUserModel from './models/useUserModel'
 const Todo = lazy(() => import('../src/components/Todo/index'))
@@ -27,7 +25,7 @@ function App() {
   const [visible, setVisible] = useState(1)
   const bottomView = useMemo(
     () => (
-      <useCounterModel.Provider value={5}>
+      <useCounterModel.Provider>
         <Counter />
         <Count />
       </useCounterModel.Provider>
