@@ -1,3 +1,11 @@
+/*
+ * @Author: swcbo
+ * @Date: 2022-03-04 22:14:00
+ * @LastEditors: swcbo
+ * @LastEditTime: 2022-04-01 10:07:15
+ * @FilePath: /rmox/src/hooks/useModel.ts
+ * @Description:
+ */
 import { FC, useContext, useEffect, useRef } from 'react'
 import Observer from '../helpers/observer'
 import { isEqual, pickStore } from '../helpers/utils'
@@ -39,6 +47,7 @@ export default <T extends ModelObj, P>(
         ) {
           update()
         }
+
         store.current = nextState
       })
       // eslint-disable-next-line react-hooks/exhaustive-deps
