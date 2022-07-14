@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-24 20:55:14
+ * @LastEditTime: 2022-07-14 13:38:19
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -10,12 +10,12 @@ import React, {
   createContext,
   FC,
   memo,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react'
 import Observer from '../helpers/observer'
-import { isEqual, uuid } from '../helpers/utils'
+import { uuid } from '../helpers/utils'
 import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
 import type {
@@ -49,7 +49,7 @@ const CreateModel = <T extends ModelObj, P>(
     const isInit = useInit(() => {
       obsRef.current.dispatch(store)
     })
-    useEffect(() => {
+    useLayoutEffect(() => {
       const obS = obsRef.current
       !isInit.current && obS.dispatch(store)
     }, [isInit, store])
@@ -66,7 +66,10 @@ const CreateModel = <T extends ModelObj, P>(
         : rmoxObs ||
           rmoxStore.set(uid, new Observer<T>()).get(uid)) as Observer<T>,
     )
+
     const executor = useMemo(() => {
+      // 同步数据更新
+      observer.current.setState(value)
       return <Executor value={value} observer={observer.current} />
     }, [value])
 
@@ -83,7 +86,7 @@ const CreateModel = <T extends ModelObj, P>(
     )
   }
 
-  const provider = memo(Provider, isEqual)
+  const provider = memo(Provider)
   // 如果为全局model并且不存在就添加到全局集合(防止全局多次注册)
   if (isGlobal && !rmox.globalModel.get(useHook)) {
     rmox.globalModel.set(useHook, provider)

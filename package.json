@@ -1,7 +1,7 @@
 {
   "name": "rmox",
   "description": "React Hook 状态管理器",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
   "main": "lib/cjs/index.js",
@@ -11,7 +11,7 @@
   "types": "typings/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
+    "dev": "set NODE_ENV=developemnt && rollup --config rollup.config.ts -w",
     "build": "rm -fr typings && rm -fr lib && set NODE_ENV=production && rollup --config rollup.config.ts"
   },
   "repository": {

@@ -4,7 +4,7 @@
  * @Author: 小白
  * @Date: 2021-09-18 08:06:44
  * @LastEditors: swcbo
- * @LastEditTime: 2022-03-26 17:08:45
+ * @LastEditTime: 2022-07-14 13:37:29
  */
 import React, { lazy, Suspense, useMemo, useState } from 'react'
 import Counter from './components/Counter'
@@ -46,10 +46,10 @@ function App() {
       </button>
       <div>测试局部卸载：</div>
       {show && (
-        <useCounterBModel.Provider value={visible}>
+        <useCounterModel.Provider>
           <Counter />
           <Count />
-        </useCounterBModel.Provider>
+        </useCounterModel.Provider>
       )}
       <div>测试隔离：</div>
       {bottomView}
