@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-07-14 13:38:19
+ * @LastEditTime: 2022-07-14 13:46:10
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -68,7 +68,6 @@ const CreateModel = <T extends ModelObj, P>(
     )
 
     const executor = useMemo(() => {
-      // 同步数据更新
       observer.current.setState(value)
       return <Executor value={value} observer={observer.current} />
     }, [value])
