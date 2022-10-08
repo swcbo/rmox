@@ -1,8 +1,9 @@
+import { ReactNode } from 'react'
 /*
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-04-01 10:07:15
+ * @LastEditTime: 2022-08-19 11:16:33
  * @FilePath: /rmox/src/hooks/useModel.ts
  * @Description:
  */
@@ -13,7 +14,7 @@ import type { IProviderProps, ModelObj, TObserverContext } from '../typing'
 import useInit from './useInit'
 import useUpdate from './useUpdate'
 export default <T extends ModelObj, P>(
-  Provider: FC<IProviderProps<P>>,
+  Provider: FC<IProviderProps<P> & { children: ReactNode }>,
   rmoxContext: TObserverContext<T>,
   observer?: Observer<T>,
 ) => {

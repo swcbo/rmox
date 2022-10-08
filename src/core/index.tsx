@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-07-14 13:46:10
+ * @LastEditTime: 2022-08-19 11:22:17
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -10,6 +10,7 @@ import React, {
   createContext,
   FC,
   memo,
+  ReactNode,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -55,7 +56,7 @@ const CreateModel = <T extends ModelObj, P>(
     }, [isInit, store])
     return <></>
   }
-  const Provider: FC<IProviderProps<P>> = props => {
+  const Provider: FC<IProviderProps<P> & { children: ReactNode }> = props => {
     const { value, children } = props as any
     const uidRef = useRef(isGlobal ? useHook : uuid())
     const uid = uidRef.current
@@ -68,7 +69,7 @@ const CreateModel = <T extends ModelObj, P>(
     )
 
     const executor = useMemo(() => {
-      observer.current.setState(value)
+      // observer.current.setState(value || {})
       return <Executor value={value} observer={observer.current} />
     }, [value])
 
