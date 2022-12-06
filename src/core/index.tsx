@@ -2,7 +2,7 @@
  * @Author: swcbo
  * @Date: 2022-03-04 22:14:00
  * @LastEditors: swcbo
- * @LastEditTime: 2022-08-19 11:22:17
+ * @LastEditTime: 2022-12-06 12:56:53
  * @FilePath: /rmox/src/core/index.tsx
  * @Description: 核心模块
  */
@@ -58,7 +58,7 @@ const CreateModel = <T extends ModelObj, P>(
   }
   const Provider: FC<IProviderProps<P> & { children: ReactNode }> = props => {
     const { value, children } = props as any
-    const uidRef = useRef(isGlobal ? useHook : uuid())
+    const uidRef = useRef(isGlobal ? useHook : ++rmox.id)
     const uid = uidRef.current
     const rmoxObs = rmoxStore.get(uid)
     const observer = useRef(
