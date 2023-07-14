@@ -12,10 +12,19 @@ import { createModel } from '../../../src/index'
 const data = () => 3
 const useCounterModel = () => {
   const ces = useRef(data())
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState({
+    a:3
+  })
   const [test, setTest] = useState(1)
-  const del = useCallback(() => setCount(count => count - 1), [])
-  const add = useCallback(() => setCount(count => count + 1), [])
+  const del = useCallback(() => setCount(count => {
+    count.a -=1;
+    return {...count}
+  }), [])
+  const add = useCallback(() => setCount(count => {
+    count.a +=1
+    return {...count}
+  }), [])
+  console.log(count,'count')
   return {
     count,
     ces,

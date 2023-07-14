@@ -20,7 +20,7 @@ const Counter: FC<{ className?: string }> = className => {
       <button onClick={add}>+</button>
       <button onClick={del}>-</button>
       {/* <button onClick={() => setTest(d => d + 1)}>?</button> */}
-      <span>B{count}</span>
+      <span>B{count.a}</span>
     </>
   )
 }

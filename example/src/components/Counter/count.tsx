@@ -14,7 +14,7 @@ const Count = () => {
   console.log('Count render', count)
   return (
     <>
-      <div style={{ fontSize: 30 }}>个数：{count}</div>
+      <div style={{ fontSize: 30 }}>个数：{count.a}</div>
       {/* <div>{ces?.current}</div> */}
     </>
   )
