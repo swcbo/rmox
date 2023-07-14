@@ -1,7 +1,7 @@
 {
   "name": "rmox",
   "description": "React Hook 状态管理器",
-  "version": "1.4.0-beta.0",
+  "version": "1.4.0-beta.1",
   "author": "<1104133609@qq.com>",
   "license": "MIT",
   "main": "lib/cjs/index.js",

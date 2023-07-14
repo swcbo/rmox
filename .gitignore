@@ -1,6 +1,5 @@
 node_modules/
 lib/
 yarn-error.log
-.npmignore
 typings/
 .size-snapshot.json
