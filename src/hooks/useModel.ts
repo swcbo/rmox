@@ -9,7 +9,7 @@ import { ReactNode } from 'react'
  */
 import { FC, useContext, useEffect, useRef } from 'react'
 import Observer from '../helpers/observer'
-import { isEqual, pickStore } from '../helpers/utils'
+import { isEqual } from '../helpers/utils'
 import type { IProviderProps, ModelObj, TObserverContext } from '../typing'
 import useInit from './useInit'
 import useUpdate from './useUpdate'
@@ -40,15 +40,13 @@ export default <T extends ModelObj, P>(
     })
     useEffect(() => {
       return obRef.current?.subscribe((nextState: T) => {
-        if (
-          !isEqual(
-            pickStore(depsFn.current, store.current),
-            pickStore(depsFn.current, nextState),
-          )
-        ) {
+        const equal =  depsFn.current.every(v=>{
+          const equal = isEqual(store.current[v], nextState[v])
+          return equal
+        });
+        if (!equal) {
           update()
         }
-
         store.current = nextState
       })
       // eslint-disable-next-line react-hooks/exhaustive-deps

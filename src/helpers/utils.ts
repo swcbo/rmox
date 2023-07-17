@@ -8,12 +8,6 @@
  */
 import type { ModelObj } from '../typing'
 
-export const uuid = () => {
-  const tempUrl = URL.createObjectURL(new Blob())
-  const uuId = tempUrl.toString()
-  URL.revokeObjectURL(tempUrl)
-  return uuId.substr(uuId.lastIndexOf('/') + 1)
-}
 // 获取对象里面的指定值
 export const pick = (obj: ModelObj, arr: string[]) =>
   arr.reduce(

@@ -16,7 +16,6 @@ import React, {
   useRef,
 } from 'react'
 import Observer from '../helpers/observer'
-import { uuid } from '../helpers/utils'
 import useInit from '../hooks/useInit'
 import useModel from '../hooks/useModel'
 import type {

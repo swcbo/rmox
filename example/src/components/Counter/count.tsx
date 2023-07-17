@@ -11,7 +11,7 @@ import useCounterModel from '../../models/useCounterModel'
  */
 const Count = () => {
   const { count } = useCounterModel()
-  console.log('Count render', count)
+  console.log('CountRender', count)
   return (
     <>
       <div style={{ fontSize: 30 }}>个数：{count.a}</div>

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 /*
  * @Descripttion:
  * @version:
@@ -12,19 +12,25 @@ import { createModel } from '../../../src/index'
 const data = () => 3
 const useCounterModel = () => {
   const ces = useRef(data())
+  const [set, setSet] = useState(0)
   const [count, setCount] = useState({
-    a:3
+    a: 3
   })
   const [test, setTest] = useState(1)
+  useEffect(() => {
+    setInterval(() => {
+      setSet(set => set + 1)
+    }, 1000)
+  }, [])
   const del = useCallback(() => setCount(count => {
-    count.a -=1;
-    return {...count}
+    count.a -= 1;
+    return { ...count }
   }), [])
   const add = useCallback(() => setCount(count => {
-    count.a +=1
-    return {...count}
+    count.a += 1
+    return { ...count }
   }), [])
-  console.log(count,'count')
+  console.log(count, 'count')
   return {
     count,
     ces,
